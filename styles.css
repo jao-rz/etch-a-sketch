@@ -1,0 +1,14 @@
+.square-css {
+    height: 50px;
+    width: 50px;
+    border-style: solid;
+}
+
+.square-css:hover {
+    background-color: brown;
+}
+
+.row {
+    display: flex;
+    gap: 2px;
+}
