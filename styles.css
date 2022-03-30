@@ -1,14 +1,13 @@
 .square-css {
     height: 25px;
     width: 25px;
-    border-style: solid;
 }
-
-/*.square-css:hover {
-    background-color: brown;
-}*/
 
 .row {
     display: flex;
 }
 
+.container {
+    border-style: solid;
+    display: inline-block;
+}
