@@ -1,4 +1,5 @@
-container = document.querySelector(".container");
+let container = document.querySelector('.container');
+container.classList.add('.container');
         
 function createSquare() {
     let square = document.createElement("div");
@@ -18,28 +19,27 @@ function createGrid(n) {
     }
 }
 
+createGrid(16);
 
 let isDrawing = false;
 
-createGrid(16);
-
 let squares = document.querySelectorAll('.square-css');
 
-container.addEventListener('mousedown', e => {
+document.body.addEventListener('mousedown', e => {
     e.preventDefault();
     isDrawing = true;
 });
 
 squares.forEach(square => square.addEventListener('mousemove', e => {
+    e.preventDefault();
     if (isDrawing === true) {
         square.style.backgroundColor = 'yellow';
     };
 }));
 
-container.addEventListener('mouseup', e => {
+document.body.addEventListener('mouseup', e => {
     e.preventDefault();
     if (isDrawing === true) {
         isDrawing = false;
     };
-    console.log("mouse is up")
 });
