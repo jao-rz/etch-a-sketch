@@ -19,13 +19,13 @@ function createGrid(n) {
     }
 }
 
-createGrid(16);
+createGrid(100);
 
 let isDrawing = false;
 
 let squares = document.querySelectorAll('.square-css');
 
-document.body.addEventListener('mousedown', e => {
+document.addEventListener('mousedown', e => {
     e.preventDefault();
     isDrawing = true;
 });
@@ -37,7 +37,7 @@ squares.forEach(square => square.addEventListener('mousemove', e => {
     };
 }));
 
-document.body.addEventListener('mouseup', e => {
+document.addEventListener('mouseup', e => {
     e.preventDefault();
     if (isDrawing === true) {
         isDrawing = false;

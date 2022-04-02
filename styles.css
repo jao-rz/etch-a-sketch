@@ -1,6 +1,7 @@
 .square-css {
-    height: 25px;
-    width: 25px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-grow: 1;
 }
 
 .row {
@@ -8,6 +9,9 @@
 }
 
 .container {
+    height: 500px;
+    width: 500px;
     border-style: solid;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
 }
