@@ -1,0 +1,60 @@
+TO DO:
+-Add a function that lets you toggle each button. 
+
+-Only one button can be on at a time. 
+    All buttonsMenu are set to off in the initial state of the program. 
+    
+    If an "off" button is clicked, 
+    make sure that all the other buttonsMenu are off 
+    before activating the clicked one. 
+
+    If an "on" button is clicked,
+    turn the button off. 
+
+    While a button is turned on,
+    add some visible cues to it. 
+
+    -If "Rainbow Pen" is clicked: 
+        if it's off,
+        set it to "on". (function activateRainbowPen)
+        and the squares may be rainbow colored. 
+
+        if it's on,
+        set it to "off". (function deactivateRanbowPen)
+
+    -If "Black Pen" is clicked: 
+        if it's off,
+        set it to "on". (function activateBlackPen)
+        and the squares may only be colored black. 
+
+        if it's on, (function dactivateBlackPen)
+        set it to "off".
+
+    -If "Grayscale" is clicked:
+        if it's off,
+        set it to "on". (function ativateGrayScale)
+        The squares may be colored lightly,
+        they become 10% darker whenever the 
+        mouse goes over the previously colored 
+        squares.
+
+        if it's on, (function deactivateGrayScale)
+        set it to "off".
+
+    -If "clear" is clicked, (function clearTheGrid)
+    remove color from all squares. 
+
+
+
+
+
+
+
+
+-Make it so that when user clicks, it can also change the color of the square.
+
+-Add an RGB color picker window popup with button.
+
+-Add clear button and its function.
+
+-Add eraser button and its function.
