@@ -1,8 +1,19 @@
 const container = document.querySelector('.container');
 
-const grid = document.createElement('div')
+const grid = document.createElement('div');
 grid.classList.add('grid');
 container.appendChild(grid);
+
+var colorPickerCanvas = document.createElement('canvas');
+colorPickerCanvas.classList.add('colorPickerCanvas');
+container.appendChild(colorPickerCanvas);
+
+var colorPickerCtx = colorPickerCanvas.getContext('2d');
+var gradient = colorPickerCtx.createLinearGradient(0, 0, 0, 300);
+gradient.addColorStop(0, 'white');
+gradient.addColorStop(.5, 'black');
+colorPickerCtx.fillStyle = gradient;
+colorPickerCtx.fillRect(0, 0, 300, 300);
 
 const buttonsMenu = document.createElement('div');
 buttonsMenu.classList.add('buttonsMenu');
@@ -83,12 +94,12 @@ let isDrawing = false;
     isDrawing = true;
 });
 
-//This is the function for Grayscale
+//THIS IS GRAYSCALE FUNCTION
 squares.forEach(square => square.addEventListener('mouseenter', e => {
     e.preventDefault();
     if (isDrawing === true) {
         if (square.style.backgroundColor == '') {
-            square.style.backgroundColor = 'rgb(0, 0, 0, 0.1)';
+            square.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
         }
         else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.1)') {
             square.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
@@ -120,7 +131,7 @@ squares.forEach(square => square.addEventListener('mouseenter', e => {
     }
 }));
 
-//This function is for Rainbow Pen
+//THIS IS RAINBOW PEN FUNCTION
 /*squares.forEach(square => square.addEventListener('mousemove', e => {
     e.preventDefault();
     if (isDrawing === true) {
