@@ -72,7 +72,7 @@ function randomHexColor() {
     return '#' + hexr + hexg + hexb;
 }
 
-createGrid(100);
+createGrid(20);
 let squares = document.querySelectorAll('.square-css');
 
 let isDrawing = false;
@@ -83,12 +83,50 @@ let isDrawing = false;
     isDrawing = true;
 });
 
-squares.forEach(square => square.addEventListener('mousemove', e => {
+//This is the function for Grayscale
+squares.forEach(square => square.addEventListener('mouseenter', e => {
+    e.preventDefault();
+    if (isDrawing === true) {
+        if (square.style.backgroundColor == '') {
+            square.style.backgroundColor = 'rgb(0, 0, 0, 0.1)';
+        }
+        else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.1)') {
+            square.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+        }
+        else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.2)') {
+            square.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
+        }
+        else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.3)') {
+            square.style.backgroundColor = 'rgba(0, 0, 0, 0.4)';
+        }
+        else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.4)') {
+            square.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        }
+        else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.5)') {
+            square.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+        }
+        else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.6)') {
+            square.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        }
+        else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.7)') {
+            square.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        }
+        else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.8)') {
+            square.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+        }
+        else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.9)') {
+            square.style.backgroundColor = 'rgba(0, 0, 0, )';
+        }
+    }
+}));
+
+//This function is for Rainbow Pen
+/*squares.forEach(square => square.addEventListener('mousemove', e => {
     e.preventDefault();
     if (isDrawing === true) {
         square.style.backgroundColor = randomHexColor();
     };
-}));
+}));*/
 
 document.addEventListener('mouseup', e => {
     e.preventDefault();
