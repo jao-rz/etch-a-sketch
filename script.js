@@ -1,3 +1,4 @@
+//DOM NODES
 const container = document.querySelector('.container');
 
 const grid = document.createElement('div');
@@ -7,51 +8,7 @@ container.appendChild(grid);
 const colorPickerCanvas = document.querySelector('.colorPickerCanvas')
 container.appendChild(colorPickerCanvas)
 
-let colorPickerCtx = colorPickerCanvas.getContext('2d');
-
-//CREATE A HORIZONTAL GRADIENT ON THE CANVAS
-let horizontalGradient = colorPickerCtx.createLinearGradient(0, 0, 300, 0);
-
-horizontalGradient.addColorStop(0, 'white');
-horizontalGradient.addColorStop(1, 'blue');
-colorPickerCtx.fillStyle = horizontalGradient;
-colorPickerCtx.fillRect(0, 0, 300, 300);
-
-//CREATE A VERTICAL GRADIENT ON THE CANVAS
-let verticalGradient = colorPickerCtx.createLinearGradient(0, 0, 0, 300);
-
-verticalGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-verticalGradient.addColorStop(1, 'black');
-colorPickerCtx.fillStyle = verticalGradient;
-colorPickerCtx.fillRect(0, 0, 300, 300);
-
-colorPickerCanvas.addEventListener('click', (event) => {
-    //GET THE COORDINATES OF CLICKED PIXEL
-    let xCoordinates = event.pageX - colorPickerCanvas.offsetLeft;
-    let yCoordinates = event.pageY - colorPickerCanvas.offsetTop;
-    console.log('X coordinates are: ' + xCoordinates + ' and Y coordinates are: ' + yCoordinates)
-
-    //GET RGB VALUES OF CLICKED PIXEL
-    let imgData = colorPickerCtx.getImageData(xCoordinates, yCoordinates, 1, 1);
-    ctxR = imgData.data[0];
-    ctxG = imgData.data[1];
-    ctxB = imgData.data[2];
-    console.log('Blue value is: ' + ctxB)
-    squares.forEach(square => square.addEventListener('mouseenter', e => {
-        e.preventDefault();
-        if (isDrawing === true) {
-            square.style.backgroundColor = `rgb(${ctxR}, ${ctxG}, ${ctxB})`;
-        };
-    }));
-});
-
-
-
-
-
-
-
-
+//BUTTONS
 const buttonsMenu = document.createElement('div');
 buttonsMenu.classList.add('buttonsMenu');
 container.appendChild(buttonsMenu);
@@ -87,17 +44,9 @@ function createSquare() {
     row.appendChild(square);
 }
 
-function createGrid(n) {
-    for (i=0; i < n; i++) {
-        row = document.createElement("div");
-        row.classList.add("row")
-        grid.appendChild(row)
+//COLOR PICKER CONTEXT
+let colorPickerCtx = colorPickerCanvas.getContext('2d');
 
-        for (j=0; j < n; j++) {
-            createSquare();
-        }
-    }
-}
 
 function randomNumberBetweenZeroAnd(num) {
    return Math.floor(Math.random()*(num + 1));
@@ -120,7 +69,59 @@ function randomHexColor() {
     return '#' + hexr + hexg + hexb;
 }
 
+function createGrid(n) {
+    for (i=0; i < n; i++) {
+        row = document.createElement("div");
+        row.classList.add("row")
+        grid.appendChild(row)
+
+        for (j=0; j < n; j++) {
+            createSquare();
+        }
+    }
+}
+
+//INITIATE PROGRAM DEFAULT
+
+//CREATE A HORIZONTAL GRADIENT ON THE CANVAS
+let horizontalGradient = colorPickerCtx.createLinearGradient(0, 0, 300, 0);
+
+horizontalGradient.addColorStop(0, 'white');
+horizontalGradient.addColorStop(1, 'blue');
+colorPickerCtx.fillStyle = horizontalGradient;
+colorPickerCtx.fillRect(0, 0, 300, 300);
+
+//CREATE A VERTICAL GRADIENT ON THE CANVAS
+let verticalGradient = colorPickerCtx.createLinearGradient(0, 0, 0, 300);
+
+verticalGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+verticalGradient.addColorStop(1, 'black');
+colorPickerCtx.fillStyle = verticalGradient;
+colorPickerCtx.fillRect(0, 0, 300, 300);
+
+//COLOR PICKER ON CLICK EVENTS
+colorPickerCanvas.addEventListener('click', (event) => {
+    //GET THE COORDINATES OF CLICKED PIXEL
+    let xCoordinates = event.pageX - colorPickerCanvas.offsetLeft;
+    let yCoordinates = event.pageY - colorPickerCanvas.offsetTop;
+    console.log('X coordinates are: ' + xCoordinates + ' and Y coordinates are: ' + yCoordinates)
+
+    //GET RGB VALUES OF CLICKED PIXEL
+    let imgData = colorPickerCtx.getImageData(xCoordinates, yCoordinates, 1, 1);
+    ctxR = imgData.data[0];
+    ctxG = imgData.data[1];
+    ctxB = imgData.data[2];
+    console.log('Blue value is: ' + ctxB)
+    squares.forEach(square => square.addEventListener('mouseenter', e => {
+        e.preventDefault();
+        if (isDrawing === true) {
+            square.style.backgroundColor = `rgb(${ctxR}, ${ctxG}, ${ctxB})`;
+        };
+    }));
+});
+
 createGrid(20);
+
 let squares = document.querySelectorAll('.square-css');
 let isDrawing = false;
 
