@@ -1,6 +1,7 @@
 .container {
     display: flex;
     justify-content: center;
+    gap: 8px;
 }
 
 .square-css {
@@ -8,6 +9,7 @@
     display: flex;
     flex-grow: 1;
 }
+
 
 .row {
     display: flex;
@@ -21,13 +23,21 @@
     flex-direction: column;
 }
 
-.colorPickerCanvas {
-    height: 300px;
-    width: 300px;
-}
-
 .buttonsMenu {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+}
+
+.colorPickerCanvas, .colorSlider {
+    align-self: flex-start
+}
+
+.marker {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0);
+    border-style: solid;
+    width: 8px;
+    height: 8px;
 }
