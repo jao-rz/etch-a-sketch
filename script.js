@@ -1,17 +1,9 @@
-//DOM NODES
+//GRID NODES
 const container = document.querySelector('.container');
 
 const grid = document.createElement('div');
 grid.classList.add('grid');
 container.appendChild(grid);
-
-const colorPickerCanvas = document.querySelector('.colorPickerCanvas')
-
-const colorSlider = document.querySelector('.colorSlider');
-
-const marker = document.createElement('div');
-marker.classList.add('marker');
-container.appendChild(marker);
 
 //BUTTONS
 const buttonsMenu = document.createElement('div');
@@ -28,29 +20,26 @@ blackPen.classList.add('blackPen');
 blackPen.textContent = 'Black Pen';
 buttonsMenu.appendChild(blackPen)
 
-const grayScalePen = document.createElement('button');
-grayScalePen.classList.add('grayScalePen');
-grayScalePen.textContent = 'Grayscale';
-buttonsMenu.appendChild(grayScalePen);
+const grayscaleButton = document.createElement('button');
+grayscaleButton.classList.add('grayscaleButton');
+grayscaleButton.textContent = 'Grayscale';
+buttonsMenu.appendChild(grayscaleButton);
 
 const eraserButton = document.createElement('button');
 eraserButton.classList.add('eraserButton');
 eraserButton.textContent = 'Eraser';
 buttonsMenu.appendChild(eraserButton);
 
-const clearGridButton = document.createElement('button');
-clearGridButton.classList.add('clearGridButton');
-clearGridButton.textContent = 'Clear';
-buttonsMenu.appendChild(clearGridButton);
- 
+const clearButton = document.createElement('button');
+clearButton.classList.add('clearButton');
+clearButton.textContent = 'Clear';
+buttonsMenu.appendChild(clearButton);
+
 function createSquare() {
     let square = document.createElement("div");
     square.classList.add("square-css");
     row.appendChild(square);
 }
-
-//COLOR PICKER CONTEXT
-let colorPickerCtx = colorPickerCanvas.getContext('2d');
 
 function randomNumberBetweenZeroAnd(num) {
    return Math.floor(Math.random()*(num + 1));
@@ -65,7 +54,6 @@ function randomRGBColor() {
 
 function randomHexColor() {
     let [r, g, b] = randomRGBColor();
-
     let hexr = r.toString(16).padStart(2, '0');
     let hexg = g.toString(16).padStart(2, '0');
     let hexb = b.toString(16).padStart(2, '0');
@@ -87,107 +75,37 @@ function createGrid(n) {
 
 //INITIATE PROGRAM DEFAULT
 
-var color = 'blue';
-
-//CREATE A HORIZONTAL GRADIENT ON THE CANVAS
-let horizontalGradient = colorPickerCtx.createLinearGradient(0, 0, 300, 0);
-
-horizontalGradient.addColorStop(0, 'white');
-horizontalGradient.addColorStop(1, color);
-colorPickerCtx.fillStyle = horizontalGradient;
-colorPickerCtx.fillRect(0, 0, 300, 300);
-
-//CREATE A VERTICAL GRADIENT ON THE CANVAS
-let verticalGradient = colorPickerCtx.createLinearGradient(0, 0, 0, 300);
-
-verticalGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-verticalGradient.addColorStop(1, 'black');
-colorPickerCtx.fillStyle = verticalGradient;
-colorPickerCtx.fillRect(0, 0, 300, 300);
-
-//COLOR PICKER ON CLICK EVENTS
-colorPickerCanvas.addEventListener('click', (event) => {
-    //GET THE COORDINATES OF CLICKED PIXEL
-    let xCoordinates = event.pageX - colorPickerCanvas.offsetLeft;
-    let yCoordinates = event.pageY - colorPickerCanvas.offsetTop;
-    console.log('X coordinates are: ' + xCoordinates + ' and Y coordinates are: ' + yCoordinates)
-
-    //GET RGB VALUES OF CLICKED PIXEL
-    let imgData = colorPickerCtx.getImageData(xCoordinates, yCoordinates, 1, 1);
-    ctxR = imgData.data[0];
-    ctxG = imgData.data[1];
-    ctxB = imgData.data[2];
-    console.log('Blue value is: ' + ctxB)
-    squares.forEach(square => square.addEventListener('mouseenter', e => {
-        e.preventDefault();
-        if (isDrawing === true) {
-            square.style.backgroundColor = `rgb(${ctxR}, ${ctxG}, ${ctxB})`;
-        };
-    }));
-
-    //PLACE MARKER WHERE MOUSE IS CLICKED ON CANVAS
-    marker.style.top =  event.pageY - 8 + 'px';
-    marker.style.left = event.pageX - 8 + 'px';
-});
-
-//ADD 2D CONTEXT TO COLOR SLIDER
-let colorSliderCtx = colorSlider.getContext('2d');
-
-//CREATE A VERTICAL GRADIENT ON THE COLOR SLIDER
-let sliderGradient = colorSliderCtx.createLinearGradient(0, 0, 0, 300);
-sliderGradient.addColorStop(0, 'red');
-sliderGradient.addColorStop(0.1, 'orange');
-sliderGradient.addColorStop(0.2, 'yellow');
-sliderGradient.addColorStop(0.4, 'lime');
-sliderGradient.addColorStop(0.5, 'skyblue');
-sliderGradient.addColorStop(0.7, 'blue');
-sliderGradient.addColorStop(0.9, 'magenta');
-sliderGradient.addColorStop(1, 'red');
-colorSliderCtx.fillStyle = sliderGradient;
-colorSliderCtx.fillRect(0, 0, 40, 300);
-
-colorSlider.addEventListener('click', (event) => {
-  //GET THE COORDINATES OF CLICKED PIXEL
-  let sliderX = event.pageX - colorSlider.offsetLeft;
-  let sliderY = event.pageY - colorSlider.offsetTop;
-  console.log(sliderX)
-  
-  //GET RGB VALUES OF CLICKED PIXEL
-  let sliderImgData = colorSliderCtx.getImageData(sliderX, sliderY, 1, 1);
-  sliderR = sliderImgData.data[0];
-  sliderG = sliderImgData.data[1];
-  sliderB = sliderImgData.data[2];
-  let color = `rgb(${sliderR}, ${sliderG}, ${sliderB})`
-
-  //CREATE A HORIZONTAL GRADIENT ON THE CANVAS
-  let horizontalGradient = colorPickerCtx.createLinearGradient(0, 0, 300, 0);
-  
-  horizontalGradient.addColorStop(0, 'white');
-  horizontalGradient.addColorStop(1, color);
-  colorPickerCtx.fillStyle = horizontalGradient;
-  colorPickerCtx.fillRect(0, 0, 300, 300);
-  //CREATE A VERTICAL GRADIENT ON THE CANVAS
-  let verticalGradient = colorPickerCtx.createLinearGradient(0, 0, 0, 300);
-  verticalGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-  verticalGradient.addColorStop(1, 'black');
-  colorPickerCtx.fillStyle = verticalGradient;
-  colorPickerCtx.fillRect(0, 0, 300, 300);
-
-  //PLACE MARKER WHERe MOUSE IS CLICKED ON SLIDER
-
-});
-
 createGrid(20);
 
 let squares = document.querySelectorAll('.square-css');
 let isDrawing = false;
 
-document.addEventListener('mousedown', e => {
+grayscaleButton.addEventListener('click', (e) => {
+    grayscaleButton.classList.toggle('on');
+});
+
+eraserButton.addEventListener('click', (e) => {
+    eraserButton.classList.toggle('on');
+});
+
+clearButton.addEventListener('click', (e) => {
+    clearButton.classList.toggle('on');
+});
+
+rainbowPen.addEventListener('click', (e) => {
+    rainbowPen.classList.toggle('on');
+});
+
+blackPen.addEventListener('click', (e) => {
+    blackPen.classList.toggle('on');
+});
+
+document.addEventListener('mousedown', (e) => {
     e.preventDefault();
     isDrawing = true;
 });
 
-document.addEventListener('mouseup', e => {
+document.addEventListener('mouseup', (e) => {
     e.preventDefault();
     if (isDrawing === true) {
         isDrawing = false;
@@ -195,7 +113,7 @@ document.addEventListener('mouseup', e => {
 });
 
 //THIS IS GRAYSCALE FUNCTION
-/*squares.forEach(square => square.addEventListener('mouseenter', e => {
+squares.forEach(square => square.addEventListener('mouseenter', e => {
     e.preventDefault();
     if (isDrawing === true) {
         if (square.style.backgroundColor == '') {
@@ -229,7 +147,7 @@ document.addEventListener('mouseup', e => {
             square.style.backgroundColor = 'rgba(0, 0, 0, )';
         }
     }
-}));*/
+}));
 
 //THIS IS RAINBOW PEN FUNCTION
 /*squares.forEach(square => square.addEventListener('mousemove', e => {
@@ -238,6 +156,3 @@ document.addEventListener('mouseup', e => {
         square.style.backgroundColor = randomHexColor();
     };
 }));*/
-
-
-

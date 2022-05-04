@@ -1,5 +1,22 @@
 TO DO:
--Add a function that lets you toggle each button. 
+
+ADD TO RGB WINDOW:
+    -SLIDER
+        -Slider that changes the color of window.
+
+    -FUNCTION:
+        -get clicked coordinates from canvas
+        -get color from those coordinates (getImageData())
+        -put the rgb from the data on the pen color
+        
+    
+
+
+ADD SLIDER FOR OPACITY:
+-Kinda like Grayscale but it doesn't change. 
+
+
+ADD BUTTON FUNCTIONS: 
 
 -Only one button can be on at a time. 
     All buttonsMenu are set to off in the initial state of the program. 
