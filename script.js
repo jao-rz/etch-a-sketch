@@ -35,6 +35,8 @@ clearButton.classList.add('clearButton');
 clearButton.textContent = 'Clear';
 buttonsMenu.appendChild(clearButton);
 
+const allButtons = document.querySelectorAll('button')
+
 function createSquare() {
     let square = document.createElement("div");
     square.classList.add("square-css");
@@ -76,28 +78,21 @@ function createGrid(n) {
 //INITIATE PROGRAM DEFAULT
 
 createGrid(20);
+let activeButton = null;
 
 let squares = document.querySelectorAll('.square-css');
 let isDrawing = false;
 
-grayscaleButton.addEventListener('click', (e) => {
-    grayscaleButton.classList.toggle('on');
-});
+//TOGGLE BUTTON ON/OFF WHEN CLICKED 
+allButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+        button.classList.toggle('on');
+        if (activeButton != null && activeButton != e.currentTarget) {
+            activeButton.classList.remove('on');
+        }
 
-eraserButton.addEventListener('click', (e) => {
-    eraserButton.classList.toggle('on');
-});
-
-clearButton.addEventListener('click', (e) => {
-    clearButton.classList.toggle('on');
-});
-
-rainbowPen.addEventListener('click', (e) => {
-    rainbowPen.classList.toggle('on');
-});
-
-blackPen.addEventListener('click', (e) => {
-    blackPen.classList.toggle('on');
+        activeButton = e.currentTarget;
+    });
 });
 
 document.addEventListener('mousedown', (e) => {
