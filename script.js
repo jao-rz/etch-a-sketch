@@ -112,8 +112,11 @@ document.addEventListener('mouseup', (e) => {
 squares.forEach(square => square.addEventListener('mouseenter', e => {
     e.preventDefault();
     if (grayscaleButton.classList.contains('on') && isDrawing === true) {
-        if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.9') {
-            square.style.backgroundColor = 'rgba(0, 0, 0, 1)';
+        if (square.style.backgroundColor == 'rgb(0, 0, 0)') {
+            square.style.backgroundColor = 'rgb(0, 0, 0)'
+        }
+        else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.9)') {
+            square.style.backgroundColor = 'rgb(0, 0, 0)'
         }
         else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.8)') {
             square.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
@@ -122,7 +125,7 @@ squares.forEach(square => square.addEventListener('mouseenter', e => {
             square.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
         }
         else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.6)') {
-            square.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            square.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
         }
         else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.5)') {
             square.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
@@ -139,9 +142,7 @@ squares.forEach(square => square.addEventListener('mouseenter', e => {
         else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.1)') {
             square.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
         }
-        else if (square.style.backgroundColor != 'rgba(0, 0, 0, 0.1)') {
-            square.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
-        }
+        else  {square.style.backgroundColor = 'rgba(0, 0, 0, 0.1)'}
     };
 }));
 
