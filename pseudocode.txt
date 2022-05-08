@@ -1,14 +1,17 @@
 TO DO:  
 
--Add clear button and its function.
-
 -Add eraser button and its function.
+
+-Add clear button and its function.
 
 -Add black pen function.
 
 -Make black pen the default activated button when the page loads.
 
 -Add a grayscale that lightens instead of darkens. 
+
+-Add the color picker and color slider
+
 
 
 ADD SLIDER FOR OPACITY:

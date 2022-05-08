@@ -111,7 +111,10 @@ document.addEventListener('mouseup', (e) => {
 
 squares.forEach(square => square.addEventListener('mouseenter', e => {
     e.preventDefault();
-    if (grayscaleButton.classList.contains('on') && isDrawing === true) {
+    if (eraserButton.classList.contains('on') && isDrawing) {
+        square.style.backgroundColor = '';
+    }
+    if (grayscaleButton.classList.contains('on') && isDrawing) {
         if (square.style.backgroundColor == 'rgb(0, 0, 0)') {
             square.style.backgroundColor = 'rgb(0, 0, 0)'
         }
@@ -143,12 +146,8 @@ squares.forEach(square => square.addEventListener('mouseenter', e => {
             square.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
         }
         else  {square.style.backgroundColor = 'rgba(0, 0, 0, 0.1)'}
-    };
-}));
-
-squares.forEach(square => square.addEventListener('mousemove', e => {
-    e.preventDefault();
+    }
     if (rainbowPen.classList.contains('on') && isDrawing === true) {
         square.style.backgroundColor = randomHexColor();
-    };
+    }
 }));
