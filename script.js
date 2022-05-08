@@ -107,7 +107,11 @@ document.addEventListener('mouseup', (e) => {
     };
 });
 
-//THIS IS GRAYSCALE FUNCTION
+clearButton.addEventListener('click', () => {
+    if (clearButton.classList.contains('on')) {
+        squares.forEach(square => square.style.backgroundColor = '');
+    }
+});
 
 squares.forEach(square => square.addEventListener('mouseenter', e => {
     e.preventDefault();
