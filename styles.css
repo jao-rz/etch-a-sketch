@@ -1,7 +1,7 @@
 .container {
     display: flex;
     justify-content: center;
-    min-width: 600px;
+    min-width: 930px;
     gap: 8px;
 }
 
@@ -40,8 +40,15 @@
 
 .colorPickerWrapper {
     position: relative;
-    height: 300px;
     display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.selectedColorWindow {
+    height: 50px;
+    width: 100px;
+    border-style: solid;
 }
 
 .colorPickerMarker {
@@ -55,7 +62,6 @@
 
 .colorSliderWrapper {
     position: relative;
-    height: 300px;
     display: flex;
     justify-content: center;
 }

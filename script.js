@@ -159,7 +159,11 @@ squares.forEach(square => square.addEventListener('mouseenter', e => {
 //COLOR PICKER AND SLIDER SCRIPT
 const colorPickerCanvas = document.querySelector('.colorPickerCanvas');
 
-const colorPickerWrapper = document.querySelector('.colorPickerWrapper')
+const colorPickerWrapper = document.querySelector('.colorPickerWrapper');
+
+const selectedColorWindow = document.createElement('div');
+selectedColorWindow.classList.add('selectedColorWindow');
+colorPickerWrapper.appendChild(selectedColorWindow);
 
 const colorSlider = document.querySelector('.colorSlider');
 
@@ -211,7 +215,7 @@ colorPickerCanvas.addEventListener('click', (event) => {
   colorPickerMarker.style.top =  event.offsetY - 8 + 'px';
   colorPickerMarker.style.left = event.offsetX - 8 + 'px';
 
-  document.body.style.backgroundColor = `rgb(${ctxR}, ${ctxG}, ${ctxB})`;
+  selectedColorWindow.style.backgroundColor = `rgb(${ctxR}, ${ctxG}, ${ctxB})`;
 });
 
 document.addEventListener('mouseup', () => {
@@ -239,7 +243,7 @@ colorPickerCanvas.addEventListener('mousemove', (event) => {
       ctxR = imgData.data[0];
       ctxG = imgData.data[1];
       ctxB = imgData.data[2];
-      document.body.style.backgroundColor = `rgb(${ctxR}, ${ctxG}, ${ctxB})`;
+      selectedColorWindow.style.backgroundColor = `rgb(${ctxR}, ${ctxG}, ${ctxB})`;
     };
 });
 
