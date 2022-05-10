@@ -15,10 +15,15 @@ rainbowPen.classList.add ('rainbowPen');
 rainbowPen.textContent = 'Rainbow Pen';
 buttonsMenu.appendChild(rainbowPen);
 
-const blackPen = document.createElement('button');
-blackPen.classList.add('blackPen');
-blackPen.textContent = 'Black Pen';
-buttonsMenu.appendChild(blackPen)
+const colorPickerPen = document.createElement('button');
+colorPickerPen.classList.add('colorPickerPen');
+colorPickerPen.textContent = 'Color Picker Pen';
+buttonsMenu.appendChild(colorPickerPen);
+
+const eyedropper = document.createElement('button');
+eyedropper.classList.add('eyedropper');
+eyedropper.textContent = 'Eyedropper';
+buttonsMenu.appendChild(eyedropper);
 
 const grayscaleButton = document.createElement('button');
 grayscaleButton.classList.add('grayscaleButton');
@@ -113,8 +118,18 @@ clearButton.addEventListener('click', () => {
     }
 });
 
+squares.forEach(square => square.addEventListener('click', (e)=> {
+    if (eyedropper.classList.contains('on')) {
+        selectedColor = square.style.backgroundColor;
+        selectedColorWindow.style.backgroundColor = selectedColor;
+    };
+}));
+
 squares.forEach(square => square.addEventListener('mouseenter', e => {
     e.preventDefault();
+    if (colorPickerPen.classList.contains('on') && isDrawing) {
+        square.style.backgroundColor = selectedColor;
+    }
     if (eraserButton.classList.contains('on') && isDrawing) {
         square.style.backgroundColor = '';
     }
@@ -177,10 +192,10 @@ const colorPickerMarker = document.createElement('div');
 colorPickerMarker.classList.add('colorPickerMarker');
 colorPickerWrapper.appendChild(colorPickerMarker);
 
-//ADD 2D CONTEXT TO COLOR PICKER CANVAS
 let colorPickerCtx = colorPickerCanvas.getContext('2d');
 var color = 'red';
 var dragging = false;
+var selectedColor = '';
 
 //CREATE A HORIZONTAL GRADIENT ON THE CANVAS
 let horizontalGradient = colorPickerCtx.createLinearGradient(0, 0, 300, 0);
@@ -215,7 +230,8 @@ colorPickerCanvas.addEventListener('click', (event) => {
   colorPickerMarker.style.top =  event.offsetY - 8 + 'px';
   colorPickerMarker.style.left = event.offsetX - 8 + 'px';
 
-  selectedColorWindow.style.backgroundColor = `rgb(${ctxR}, ${ctxG}, ${ctxB})`;
+  selectedColor = `rgb(${ctxR}, ${ctxG}, ${ctxB})`
+  selectedColorWindow.style.backgroundColor = selectedColor;
 });
 
 document.addEventListener('mouseup', () => {
@@ -243,7 +259,8 @@ colorPickerCanvas.addEventListener('mousemove', (event) => {
       ctxR = imgData.data[0];
       ctxG = imgData.data[1];
       ctxB = imgData.data[2];
-      selectedColorWindow.style.backgroundColor = `rgb(${ctxR}, ${ctxG}, ${ctxB})`;
+      selectedColor = `rgb(${ctxR}, ${ctxG}, ${ctxB})`
+      selectedColorWindow.style.backgroundColor = selectedColor;
     };
 });
 
