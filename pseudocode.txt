@@ -1,9 +1,10 @@
-TO DO:  
--Add modal
--Hide color picker
+TO DO: 
+-remove colorpicker from flow
 -Add toolbar functions
 -Attach button functions to icons instead of buttons
+-Delete buttons
 -design background (add color)
 -Add every element on html via DOM
+-Add pencil icon that draws on the canvas when selected
 -Refactor color picker, grid and each icon's functions
 

@@ -1,6 +1,68 @@
 //GRID NODES
 const container = document.querySelector('.container');
 
+const icons = document.querySelectorAll('li');
+const colorPickerTool = document.querySelector('.colorPickerTool');
+const modalWrapper = document.querySelector('.modalWrapper')
+const modal = document.querySelector('.modal')
+
+let activeIcon = null;
+
+icons.forEach(icon => {
+  icon.addEventListener('click', (event)=>{
+
+    activateClickedIcon();
+    deactivateNonClickedIcons();
+    activeIcon = event.currentTarget;
+
+    if(modalIsActive() && activeIcon != colorPickerTool) {hideModal()};
+
+    function activateClickedIcon() {
+      return icon.classList.toggle('iconIsActive')
+    };
+    
+    function deactivateNonClickedIcons() {
+      if (activeIcon != null && activeIcon != event.currentTarget) {
+        return activeIcon.classList.remove('iconIsActive');
+      }
+    };
+  });
+}); 
+
+modalWrapper.addEventListener('click', (event)=>{
+  if(eventOutisdeModal(event) && modalIsActive()) {
+    hideModal();
+    deactivatecolorPickerTool();
+  };
+});
+
+colorPickerTool.addEventListener('click', toggleModal);
+
+function modalIsActive() {
+  return modalWrapper.classList.contains('active');
+};
+
+function eventOutisdeModal(event) {
+  return modal.contains(event.target) == false;
+};
+
+function toggleModal() {
+  if(modalIsActive()) {return hideModal()}
+  else {return showModal()};
+};
+
+function hideModal() {
+  return modalWrapper.classList.remove('active');
+};
+
+function showModal() {
+ return modalWrapper.classList.add('active');
+};
+
+function deactivatecolorPickerTool() {
+  colorPickerTool.classList.remove('iconIsActive');
+};
+
 const gridWrapper = document.createElement('div');
 gridWrapper.classList.add('gridWrapper');
 container.appendChild(gridWrapper);
