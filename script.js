@@ -3,8 +3,13 @@ const container = document.querySelector('.container');
 
 const icons = document.querySelectorAll('li');
 const colorPickerTool = document.querySelector('.colorPickerTool');
-const modalWrapper = document.querySelector('.modalWrapper')
-const modal = document.querySelector('.modal')
+const eyedropperTool = document.querySelector('.eyedropperTool');
+const grayscaleTool = document.querySelector('.grayscaleTool');
+const rainbowTool = document.querySelector('.rainbowTool');
+const eraserTool = document.querySelector('.eraserTool');
+const deleteTool = document.querySelector('.deleteTool');
+const modalWrapper = document.querySelector('.modalWrapper');
+const modal = document.querySelector('.modal');
 
 let activeIcon = null;
 
@@ -182,14 +187,14 @@ document.addEventListener('mouseup', (e) => {
     };
 });
 
-clearButton.addEventListener('click', () => {
-    if (clearButton.classList.contains('on')) {
+deleteTool.addEventListener('click', () => {
+    if (deleteTool.classList.contains('iconIsActive')) {
         squares.forEach(square => square.style.backgroundColor = '');
     }
 });
 
 squares.forEach(square => square.addEventListener('click', (e)=> {
-    if (eyedropper.classList.contains('on')) {
+    if (eyedropperTool.classList.contains('iconIsActive')) {
         selectedColor = square.style.backgroundColor;
         selectedColorWindow.style.backgroundColor = selectedColor;
     };
@@ -200,10 +205,10 @@ squares.forEach(square => square.addEventListener('mouseenter', e => {
     if (colorPickerPen.classList.contains('on') && isDrawing) {
         square.style.backgroundColor = selectedColor;
     }
-    if (eraserButton.classList.contains('on') && isDrawing) {
+    if (eraserTool.classList.contains('iconIsActive') && isDrawing) {
         square.style.backgroundColor = '';
     }
-    if (grayscaleButton.classList.contains('on') && isDrawing) {
+    if (grayscaleTool.classList.contains('iconIsActive') && isDrawing) {
         if (square.style.backgroundColor == 'rgb(0, 0, 0)') {
             square.style.backgroundColor = 'rgb(0, 0, 0)'
         }
@@ -236,7 +241,7 @@ squares.forEach(square => square.addEventListener('mouseenter', e => {
         }
         else  {square.style.backgroundColor = 'rgba(0, 0, 0, 0.1)'}
     }
-    if (rainbowPen.classList.contains('on') && isDrawing === true) {
+    if (rainbowTool.classList.contains('iconIsActive') && isDrawing === true) {
         square.style.backgroundColor = randomHexColor();
     }
 }));

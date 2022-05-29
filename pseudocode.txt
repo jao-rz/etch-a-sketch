@@ -1,8 +1,8 @@
 TO DO: 
--remove colorpicker from flow
--Add toolbar functions
--Attach button functions to icons instead of buttons
--Delete buttons
+-Make it so that mpdal can be hidden by 
+clicking anywhere outside it.
+-create Pencil button
+-Delete first buttons
 -design background (add color)
 -Add every element on html via DOM
 -Add pencil icon that draws on the canvas when selected
