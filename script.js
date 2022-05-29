@@ -82,7 +82,7 @@ function createGrid(n) {
 
 //INITIATE PROGRAM DEFAULT
 
-createGrid(100);
+createGrid(75);
 let activeButton = null;
 
 var squares = document.querySelectorAll('.square-css');
