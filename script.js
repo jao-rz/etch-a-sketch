@@ -1,9 +1,17 @@
 //GRID NODES
 const container = document.querySelector('.container');
 
+const gridWrapper = document.createElement('div');
+gridWrapper.classList.add('gridWrapper');
+container.appendChild(gridWrapper);
+
 const grid = document.createElement('div');
 grid.classList.add('grid');
-container.appendChild(grid);
+gridWrapper.appendChild(grid);
+
+const selectedColorWindow = document.createElement('div');
+selectedColorWindow.classList.add('selectedColorWindow');
+gridWrapper.appendChild(selectedColorWindow);
 
 //BUTTONS
 const buttonsMenu = document.createElement('div');
@@ -175,10 +183,6 @@ squares.forEach(square => square.addEventListener('mouseenter', e => {
 const colorPickerCanvas = document.querySelector('.colorPickerCanvas');
 
 const colorPickerWrapper = document.querySelector('.colorPickerWrapper');
-
-const selectedColorWindow = document.createElement('div');
-selectedColorWindow.classList.add('selectedColorWindow');
-colorPickerWrapper.appendChild(selectedColorWindow);
 
 const colorSlider = document.querySelector('.colorSlider');
 

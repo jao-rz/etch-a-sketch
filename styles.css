@@ -69,6 +69,12 @@ img {
     display: flex;
 }
 
+.gridWrapper {
+    display:flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .grid {
     height: 500px;
     min-width: 500px;
