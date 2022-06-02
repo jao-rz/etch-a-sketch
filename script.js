@@ -76,46 +76,26 @@ const grid = document.createElement('div');
 grid.classList.add('grid');
 gridWrapper.appendChild(grid);
 
+const selectedColorDivs = document.createElement('div');
+selectedColorDivs.classList.add('selectedColorDivs');
+gridWrapper.appendChild(selectedColorDivs);
+
 const selectedColorWindow = document.createElement('div');
 selectedColorWindow.classList.add('selectedColorWindow');
-gridWrapper.appendChild(selectedColorWindow);
+selectedColorDivs.appendChild(selectedColorWindow);
 
-//BUTTONS
-const buttonsMenu = document.createElement('div');
-buttonsMenu.classList.add('buttonsMenu');
-container.appendChild(buttonsMenu);
+const selectedColorPen = document.createElement('div');
+selectedColorPen.classList.add('selectedColorPen');
+selectedColorDivs.appendChild(selectedColorPen);
 
-const rainbowPen = document.createElement('button');
-rainbowPen.classList.add ('rainbowPen');
-rainbowPen.textContent = 'Rainbow Pen';
-buttonsMenu.appendChild(rainbowPen);
+const penIcon = document.createElement('img');
+penIcon.classList.add('penIcon');
+penIcon.setAttribute("src", "images/signature.png");
+selectedColorPen.appendChild(penIcon);
 
-const colorPickerPen = document.createElement('button');
-colorPickerPen.classList.add('colorPickerPen');
-colorPickerPen.textContent = 'Color Picker Pen';
-buttonsMenu.appendChild(colorPickerPen);
-
-const eyedropper = document.createElement('button');
-eyedropper.classList.add('eyedropper');
-eyedropper.textContent = 'Eyedropper';
-buttonsMenu.appendChild(eyedropper);
-
-const grayscaleButton = document.createElement('button');
-grayscaleButton.classList.add('grayscaleButton');
-grayscaleButton.textContent = 'Grayscale';
-buttonsMenu.appendChild(grayscaleButton);
-
-const eraserButton = document.createElement('button');
-eraserButton.classList.add('eraserButton');
-eraserButton.textContent = 'Eraser';
-buttonsMenu.appendChild(eraserButton);
-
-const clearButton = document.createElement('button');
-clearButton.classList.add('clearButton');
-clearButton.textContent = 'Clear';
-buttonsMenu.appendChild(clearButton);
-
-const allButtons = document.querySelectorAll('button')
+selectedColorPen.addEventListener('click', (e)=> {
+    selectedColorDivs.classList.toggle('on');
+});
 
 function createSquare() {
     let square = document.createElement("div");
@@ -163,18 +143,6 @@ let activeButton = null;
 var squares = document.querySelectorAll('.square-css');
 var isDrawing = false;
 
-//TOGGLE BUTTON ON/OFF WHEN CLICKED 
-allButtons.forEach((button) => {
-    button.addEventListener('click', (e) => {
-        button.classList.toggle('on');
-        if (activeButton != null && activeButton != e.currentTarget) {
-            activeButton.classList.remove('on');
-        }
-
-        activeButton = e.currentTarget;
-    });
-});
-
 document.addEventListener('mousedown', (e) => {
     e.preventDefault();
     isDrawing = true;
@@ -202,7 +170,7 @@ squares.forEach(square => square.addEventListener('click', (e)=> {
 
 squares.forEach(square => square.addEventListener('mouseenter', e => {
     e.preventDefault();
-    if (colorPickerPen.classList.contains('on') && isDrawing) {
+    if (selectedColorDivs.classList.contains('on') && isDrawing) {
         square.style.backgroundColor = selectedColor;
     }
     if (eraserTool.classList.contains('iconIsActive') && isDrawing) {

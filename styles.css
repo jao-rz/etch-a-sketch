@@ -4,7 +4,7 @@
     min-width: 950px;
     gap: 8px;
     position: relative;
-    height: 100vh;
+    height: 98vh;
     background-color: rgba(0, 0, 0, 0.205);
 }
 
@@ -55,12 +55,7 @@ li:hover {
 
 ul li:last-child .imageWrapper {border-bottom: none;}
 
-img {
-    width: 75px;
-    height: 75px;
-}
-
-img {
+li img {
     width: 75px;
     height: 75px;
 }
@@ -104,10 +99,30 @@ img {
     gap: 8px;
 }
 
+.selectedColorDivs {
+    display: flex;
+    border-style: solid;
+    width: min-content;
+}
+
 .selectedColorWindow {
     height: 50px;
     width: 100px;
     border-style: solid;
+}
+
+.selectedColorPen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 50px;
+    border-style: solid;
+    border-left: none;
+}
+
+.penIcon {
+    max-height: 40px;;
 }
 
 .colorPickerMarker {
@@ -160,12 +175,6 @@ img {
     border-style: solid;
     display: flex;
     flex-direction: column;
-}
-
-.buttonsMenu {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
 }
 
 .on {
