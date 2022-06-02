@@ -1,6 +1,5 @@
 .container {
     display: flex;
-    justify-content: space-between;
     min-width: 950px;
     gap: 8px;
     position: relative;
@@ -165,16 +164,20 @@ li img {
 
 .gridWrapper {
     display:flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     gap: 8px;
 }
 
 .grid {
     height: 500px;
-    min-width: 500px;
+    width: 500px;
     border-style: solid;
     display: flex;
     flex-direction: column;
+    flex-grow: 0;
 }
 
 .on {

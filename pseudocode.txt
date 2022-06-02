@@ -1,18 +1,15 @@
 TO DO: 
+-Refactor line 91 of javascript
 -Make it so that modal can be hidden by 
 clicking anywhere outside it.
 -Make it so that when another icon is clicked,
 the pencil icon is turned off.
 
--Centralize canvas.
--create Pencil button besides selectedColorWindow
--Delete first buttons
 -Add little pop up to Grayscale Icon on hover that says: Grayscale Pen
 -design background (add color)
 
 
 -Add every element on html via DOM
--Add pencil icon that draws on the canvas when selected
 -Maybe move color picker modal to a different position
 -Refactor color picker, grid and each icon's functions
 
