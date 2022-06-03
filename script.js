@@ -93,9 +93,13 @@ penIcon.classList.add('penIcon');
 penIcon.setAttribute("src", "images/signature.png");
 selectedColorPen.appendChild(penIcon);
 
-selectedColorPen.addEventListener('click', (e)=> {
-    selectedColorDivs.classList.toggle('on');
-});
+selectedColorPen.addEventListener('click', togglePen);
+
+function togglePen() {return selectedColorDivs.classList.toggle('on')};
+
+
+
+
 
 function createSquare() {
     let square = document.createElement("div");
