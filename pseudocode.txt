@@ -1,15 +1,25 @@
 TO DO: 
--Refactor line 91 of javascript
 -Make it so that modal can be hidden by 
 clicking anywhere outside it.
+
 -Make it so that when another icon is clicked,
 the pencil icon is turned off.
 
+-Make it so that when pencil is clicked, the 
+border color changes instead of the backgroundColor.
+
 -Add little pop up to Grayscale Icon on hover that says: Grayscale Pen
+
 -design background (add color)
 
-
 -Add every element on html via DOM
+
 -Maybe move color picker modal to a different position
+
 -Refactor color picker, grid and each icon's functions
+
+-Make it so that user can change the size of the canvas.
+
+-Add a pop up that asks user if they want to delete,
+when they click on the delete icon. 
 

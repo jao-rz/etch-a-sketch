@@ -11,6 +11,33 @@ const deleteTool = document.querySelector('.deleteTool');
 const modalWrapper = document.querySelector('.modalWrapper');
 const modal = document.querySelector('.modal');
 
+const gridWrapper = document.createElement('div');
+gridWrapper.classList.add('gridWrapper');
+container.appendChild(gridWrapper);
+
+const grid = document.createElement('div');
+grid.classList.add('grid');
+gridWrapper.appendChild(grid);
+
+const selectedColorDivs = document.createElement('div');
+selectedColorDivs.classList.add('selectedColorDivs');
+gridWrapper.appendChild(selectedColorDivs);
+
+const selectedColorWindow = document.createElement('div');
+selectedColorWindow.classList.add('selectedColorWindow');
+selectedColorDivs.appendChild(selectedColorWindow);
+
+const selectedColorPen = document.createElement('div');
+selectedColorPen.classList.add('selectedColorPen');
+selectedColorDivs.appendChild(selectedColorPen);
+
+const penIcon = document.createElement('img');
+penIcon.classList.add('penIcon');
+penIcon.setAttribute("src", "images/signature.png");
+selectedColorPen.appendChild(penIcon);
+
+selectedColorPen.addEventListener('click', togglePen);
+
 let activeIcon = null;
 
 icons.forEach(icon => {
@@ -19,13 +46,11 @@ icons.forEach(icon => {
     activateClickedIcon();
     deactivateNonClickedIcons();
     activeIcon = event.currentTarget;
-
     if(modalIsActive() && activeIcon != colorPickerTool) {hideModal()};
 
     function activateClickedIcon() {
       return icon.classList.toggle('iconIsActive')
     };
-    
     function deactivateNonClickedIcons() {
       if (activeIcon != null && activeIcon != event.currentTarget) {
         return activeIcon.classList.remove('iconIsActive');
@@ -34,7 +59,7 @@ icons.forEach(icon => {
   });
 }); 
 
-modalWrapper.addEventListener('click', (event)=>{
+gridWrapper.addEventListener('click', (event)=>{
   if(eventOutisdeModal(event) && modalIsActive()) {
     hideModal();
     deactivatecolorPickerTool();
@@ -68,38 +93,7 @@ function deactivatecolorPickerTool() {
   colorPickerTool.classList.remove('iconIsActive');
 };
 
-const gridWrapper = document.createElement('div');
-gridWrapper.classList.add('gridWrapper');
-container.appendChild(gridWrapper);
-
-const grid = document.createElement('div');
-grid.classList.add('grid');
-gridWrapper.appendChild(grid);
-
-const selectedColorDivs = document.createElement('div');
-selectedColorDivs.classList.add('selectedColorDivs');
-gridWrapper.appendChild(selectedColorDivs);
-
-const selectedColorWindow = document.createElement('div');
-selectedColorWindow.classList.add('selectedColorWindow');
-selectedColorDivs.appendChild(selectedColorWindow);
-
-const selectedColorPen = document.createElement('div');
-selectedColorPen.classList.add('selectedColorPen');
-selectedColorDivs.appendChild(selectedColorPen);
-
-const penIcon = document.createElement('img');
-penIcon.classList.add('penIcon');
-penIcon.setAttribute("src", "images/signature.png");
-selectedColorPen.appendChild(penIcon);
-
-selectedColorPen.addEventListener('click', togglePen);
-
 function togglePen() {return selectedColorDivs.classList.toggle('on')};
-
-
-
-
 
 function createSquare() {
     let square = document.createElement("div");
