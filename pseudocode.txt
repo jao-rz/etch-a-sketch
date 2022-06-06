@@ -1,12 +1,16 @@
 TO DO: 
--Make it so that modal can be hidden by 
-clicking anywhere outside it.
+-Change backgroundWrapper name to something else
 
 -Make it so that when another icon is clicked,
-the pencil icon is turned off.
+the pencil icon is turned off except colorPickerTool
 
--Make it so that when pencil is clicked, the 
+-Make it so that when pencil is clicked, the
 border color changes instead of the backgroundColor.
+
+-Add a hover effect to the pencil icon.
+
+-MAke it so color picker slides up
+from corner of the screen instead
 
 -Add little pop up to Grayscale Icon on hover that says: Grayscale Pen
 

@@ -1,7 +1,6 @@
 //GRID NODES
 const container = document.querySelector('.container');
 
-const icons = document.querySelectorAll('li');
 const colorPickerTool = document.querySelector('.colorPickerTool');
 const eyedropperTool = document.querySelector('.eyedropperTool');
 const grayscaleTool = document.querySelector('.grayscaleTool');
@@ -11,17 +10,17 @@ const deleteTool = document.querySelector('.deleteTool');
 const modalWrapper = document.querySelector('.modalWrapper');
 const modal = document.querySelector('.modal');
 
-const gridWrapper = document.createElement('div');
-gridWrapper.classList.add('gridWrapper');
-container.appendChild(gridWrapper);
+const backgroundWrapper = document.createElement('div');
+backgroundWrapper.classList.add('backgroundWrapper');
+container.appendChild(backgroundWrapper);
 
 const grid = document.createElement('div');
 grid.classList.add('grid');
-gridWrapper.appendChild(grid);
+backgroundWrapper.appendChild(grid);
 
 const selectedColorDivs = document.createElement('div');
 selectedColorDivs.classList.add('selectedColorDivs');
-gridWrapper.appendChild(selectedColorDivs);
+backgroundWrapper.appendChild(selectedColorDivs);
 
 const selectedColorWindow = document.createElement('div');
 selectedColorWindow.classList.add('selectedColorWindow');
@@ -29,6 +28,7 @@ selectedColorDivs.appendChild(selectedColorWindow);
 
 const selectedColorPen = document.createElement('div');
 selectedColorPen.classList.add('selectedColorPen');
+selectedColorPen.classList.add('icon');
 selectedColorDivs.appendChild(selectedColorPen);
 
 const penIcon = document.createElement('img');
@@ -36,7 +36,9 @@ penIcon.classList.add('penIcon');
 penIcon.setAttribute("src", "images/signature.png");
 selectedColorPen.appendChild(penIcon);
 
-selectedColorPen.addEventListener('click', togglePen);
+//selectedColorPen.addEventListener('click', togglePen);
+
+const icons = document.querySelectorAll('.icon');
 
 let activeIcon = null;
 
@@ -59,7 +61,7 @@ icons.forEach(icon => {
   });
 }); 
 
-gridWrapper.addEventListener('click', (event)=>{
+backgroundWrapper.addEventListener('click', (event)=>{
   if(eventOutisdeModal(event) && modalIsActive()) {
     hideModal();
     deactivatecolorPickerTool();
@@ -168,7 +170,7 @@ squares.forEach(square => square.addEventListener('click', (e)=> {
 
 squares.forEach(square => square.addEventListener('mouseenter', e => {
     e.preventDefault();
-    if (selectedColorDivs.classList.contains('on') && isDrawing) {
+    if (selectedColorPen.classList.contains('iconIsActive') && isDrawing) {
         square.style.backgroundColor = selectedColor;
     }
     if (eraserTool.classList.contains('iconIsActive') && isDrawing) {
