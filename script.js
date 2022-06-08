@@ -7,6 +7,7 @@ const grayscaleTool = document.querySelector('.grayscaleTool');
 const rainbowTool = document.querySelector('.rainbowTool');
 const eraserTool = document.querySelector('.eraserTool');
 const deleteTool = document.querySelector('.deleteTool');
+
 const modalWrapper = document.querySelector('.modalWrapper');
 const modal = document.querySelector('.modal');
 
@@ -36,21 +37,23 @@ penIcon.classList.add('penIcon');
 penIcon.setAttribute("src", "images/signature.png");
 selectedColorPen.appendChild(penIcon);
 
-//selectedColorPen.addEventListener('click', togglePen);
-
 const icons = document.querySelectorAll('.icon');
 
+let clickedIcon = null;
 let activeIcon = null;
 
 icons.forEach(icon => {
   icon.addEventListener('click', (event)=>{
+    clickedIcon = event.currentTarget;
 
-    activateClickedIcon();
+    toggleClickedIcon();
     deactivateNonClickedIcons();
-    activeIcon = event.currentTarget;
+    setActiveIcon();
+    console.log(activeIcon);
+
     if(modalIsActive() && activeIcon != colorPickerTool) {hideModal()};
 
-    function activateClickedIcon() {
+    function toggleClickedIcon() {
       return icon.classList.toggle('iconIsActive')
     };
     function deactivateNonClickedIcons() {
@@ -58,13 +61,19 @@ icons.forEach(icon => {
         return activeIcon.classList.remove('iconIsActive');
       }
     };
+    function setActiveIcon() {
+      if (clickedIcon.classList.contains('iconIsActive')) {return activeIcon = clickedIcon}
+      else {return activeIcon = null};
+    };
   });
-}); 
+});
 
 backgroundWrapper.addEventListener('click', (event)=>{
   if(eventOutisdeModal(event) && modalIsActive()) {
     hideModal();
     deactivatecolorPickerTool();
+    activeIcon = null;
+    console.log(activeIcon);
   };
 });
 
