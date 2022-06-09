@@ -4,7 +4,7 @@
     gap: 8px;
     position: relative;
     height: 97vh;
-    background-color: rgba(0, 0, 0, 0.205);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .toolbar {
@@ -105,10 +105,16 @@ li img {
 
 .selectedColorDivs {
     display: flex;
-
     border-style: solid;
     width: min-content;
+    background-color: white;
 }
+
+.on {
+    border-style: solid;
+    border-color: white;
+}
+
 
 .selectedColorWindow {
     height: 50px;
@@ -124,6 +130,10 @@ li img {
     width: 50px;
     border-style: solid;
     border-left: none;
+}
+
+.selectedColorPen:hover {
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .penIcon {
@@ -185,8 +195,3 @@ li img {
     flex-direction: column;
     flex-grow: 0;
 }
-
-.on {
-    background-color: aqua;
-}
-

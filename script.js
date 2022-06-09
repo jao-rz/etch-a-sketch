@@ -45,8 +45,11 @@ let activeIcon = null;
 icons.forEach(icon => {
   icon.addEventListener('click', (event)=>{
     clickedIcon = event.currentTarget;
-
     toggleClickedIcon();
+    
+    if (selectedColorPen == clickedIcon) {togglePen()}
+    else{selectedColorDivs.classList.remove('on')};
+
     deactivateNonClickedIcons();
     setActiveIcon();
     console.log(activeIcon);
@@ -67,6 +70,8 @@ icons.forEach(icon => {
     };
   });
 });
+
+function togglePen() {return selectedColorDivs.classList.toggle('on')};
 
 backgroundWrapper.addEventListener('click', (event)=>{
   if(eventOutisdeModal(event) && modalIsActive()) {
@@ -103,8 +108,6 @@ function showModal() {
 function deactivatecolorPickerTool() {
   colorPickerTool.classList.remove('iconIsActive');
 };
-
-function togglePen() {return selectedColorDivs.classList.toggle('on')};
 
 function createSquare() {
     let square = document.createElement("div");
