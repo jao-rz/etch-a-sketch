@@ -46,28 +46,29 @@ icons.forEach(icon => {
   icon.addEventListener('click', (event)=>{
     clickedIcon = event.currentTarget;
     toggleClickedIcon();
-    
     if (selectedColorPen == clickedIcon) {togglePen()}
-    else{selectedColorDivs.classList.remove('on')};
-
+    else{deactivatePen()};
     deactivateNonClickedIcons();
     setActiveIcon();
     console.log(activeIcon);
-
     if(modalIsActive() && activeIcon != colorPickerTool) {hideModal()};
 
+    function setActiveIcon() {
+      if (clickedIcon.classList.contains('iconIsActive')) {return activeIcon = clickedIcon}
+      else {return activeIcon = null};
+    };
     function toggleClickedIcon() {
       return icon.classList.toggle('iconIsActive')
     };
     function deactivateNonClickedIcons() {
       if (activeIcon != null && activeIcon != event.currentTarget) {
         return activeIcon.classList.remove('iconIsActive');
-      }
+      };
     };
-    function setActiveIcon() {
-      if (clickedIcon.classList.contains('iconIsActive')) {return activeIcon = clickedIcon}
-      else {return activeIcon = null};
+    function deactivatePen() {
+      selectedColorDivs.classList.remove('on')
     };
+
   });
 });
 
@@ -183,7 +184,7 @@ squares.forEach(square => square.addEventListener('click', (e)=> {
 squares.forEach(square => square.addEventListener('mouseenter', e => {
     e.preventDefault();
     if (selectedColorPen.classList.contains('iconIsActive') && isDrawing) {
-        square.style.backgroundColor = selectedColor;
+        square.style.backgroundColor = selectedColorWindow.style.backgroundColor;
     }
     if (eraserTool.classList.contains('iconIsActive') && isDrawing) {
         square.style.backgroundColor = '';
@@ -219,7 +220,7 @@ squares.forEach(square => square.addEventListener('mouseenter', e => {
         else if (square.style.backgroundColor == 'rgba(0, 0, 0, 0.1)') {
             square.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
         }
-        else  {square.style.backgroundColor = 'rgba(0, 0, 0, 0.1)'}
+        else{square.style.backgroundColor = 'rgba(0, 0, 0, 0.1)'}
     }
     if (rainbowTool.classList.contains('iconIsActive') && isDrawing === true) {
         square.style.backgroundColor = randomHexColor();
@@ -228,11 +229,8 @@ squares.forEach(square => square.addEventListener('mouseenter', e => {
 
 //COLOR PICKER AND SLIDER SCRIPT
 const colorPickerCanvas = document.querySelector('.colorPickerCanvas');
-
 const colorPickerWrapper = document.querySelector('.colorPickerWrapper');
-
 const colorSlider = document.querySelector('.colorSlider');
-
 const colorSliderWrapper = document.querySelector('.colorSliderWrapper');
 
 const colorSliderMarker = document.createElement('div');
@@ -244,21 +242,18 @@ colorPickerMarker.classList.add('colorPickerMarker');
 colorPickerWrapper.appendChild(colorPickerMarker);
 
 let colorPickerCtx = colorPickerCanvas.getContext('2d');
-var color = 'red';
 var dragging = false;
 var selectedColor = '';
 
 //CREATE A HORIZONTAL GRADIENT ON THE CANVAS
 let horizontalGradient = colorPickerCtx.createLinearGradient(0, 0, 300, 0);
-
 horizontalGradient.addColorStop(0, 'white');
-horizontalGradient.addColorStop(1, color);
+horizontalGradient.addColorStop(1, 'red');
 colorPickerCtx.fillStyle = horizontalGradient;
 colorPickerCtx.fillRect(0, 0, 300, 300);
 
 //CREATE A VERTICAL GRADIENT ON THE CANVAS
 let verticalGradient = colorPickerCtx.createLinearGradient(0, 0, 0, 300);
-
 verticalGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
 verticalGradient.addColorStop(1, 'black');
 colorPickerCtx.fillStyle = verticalGradient;
@@ -267,22 +262,23 @@ colorPickerCtx.fillRect(0, 0, 300, 300);
 colorPickerCanvas.addEventListener('click', (event) => {
   event.preventDefault()
 
-  //GET THE COORDINATES OF CLICKED PIXEL
-  let xCoordinates = event.offsetX;
-  let yCoordinates = event.offsetY;
+  let clickedPixelXCoordinates = event.offsetX;
+  let clickedPixelYCoordinates = event.offsetY;
+  setMarkerOnClickedPixel();
+  selectedColorWindow.style.backgroundColor = getClickedPixelRGBValues();
 
-  //GET RGB VALUES OF CLICKED PIXEL
-  let imgData = colorPickerCtx.getImageData(xCoordinates, yCoordinates, 1, 1);
-  ctxR = imgData.data[0];
-  ctxG = imgData.data[1];
-  ctxB = imgData.data[2];
+  function getClickedPixelRGBValues() {
+    let imgData = colorPickerCtx.getImageData(clickedPixelXCoordinates, clickedPixelYCoordinates, 1, 1);
+    clickedPixelR = imgData.data[0];
+    clickedPixelG = imgData.data[1];
+    clickedPixelB = imgData.data[2];
+    return pixelRGB = `rgb(${clickedPixelR}, ${clickedPixelG}, ${clickedPixelB})`;
+  }
 
-  //PLACE MARKER WHERE MOUSE IS CLICKED ON CANVAS
-  colorPickerMarker.style.top =  event.offsetY - 8 + 'px';
-  colorPickerMarker.style.left = event.offsetX - 8 + 'px';
-
-  selectedColor = `rgb(${ctxR}, ${ctxG}, ${ctxB})`
-  selectedColorWindow.style.backgroundColor = selectedColor;
+  function setMarkerOnClickedPixel() {
+    colorPickerMarker.style.top =  clickedPixelYCoordinates - 8 + 'px';
+    colorPickerMarker.style.left = clickedPixelXCoordinates - 8 + 'px';  
+  }
 });
 
 document.addEventListener('mouseup', () => {
@@ -307,10 +303,10 @@ colorPickerCanvas.addEventListener('mousemove', (event) => {
 
       //CHANGE THE BACKGROUND COLOR WHILE colorPickerMarker IS DRAGGED
       let imgData = colorPickerCtx.getImageData(xCoordinates, yCoordinates, 1, 1);
-      ctxR = imgData.data[0];
-      ctxG = imgData.data[1];
-      ctxB = imgData.data[2];
-      selectedColor = `rgb(${ctxR}, ${ctxG}, ${ctxB})`
+      pixelR = imgData.data[0];
+      pixelG = imgData.data[1];
+      pixelB = imgData.data[2];
+      selectedColor = `rgb(${pixelR}, ${pixelG}, ${pixelB})`
       selectedColorWindow.style.backgroundColor = selectedColor;
     };
 });
@@ -333,7 +329,7 @@ colorSliderCtx.fillRect(0, 0, 40, 300);
 
 colorSlider.addEventListener('click', (event) => {
 
-  //GET THE COORDINATES OF CLICKED PIXEL
+  //GET THE COORDINATES OF CLICKED PIXEL ON SLIDER
   let sliderX = event.offsetX;
   let sliderY = event.offsetY;
 
@@ -342,11 +338,12 @@ colorSlider.addEventListener('click', (event) => {
   sliderR = sliderImgData.data[0];
   sliderG = sliderImgData.data[1];
   sliderB = sliderImgData.data[2];
-  let color = `rgb(${sliderR}, ${sliderG}, ${sliderB})`;
+
+  //Set color of gradient
+  let color = `rgb(${sliderR}, ${sliderG}, ${sliderB})`;//place 'rgb...' in variable
 
   //CREATE A HORIZONTAL GRADIENT ON THE CANVAS
   let horizontalGradient = colorPickerCtx.createLinearGradient(0, 0, 300, 0);
-  
   horizontalGradient.addColorStop(0, 'white');
   horizontalGradient.addColorStop(1, color);
   colorPickerCtx.fillStyle = horizontalGradient;
@@ -354,7 +351,6 @@ colorSlider.addEventListener('click', (event) => {
 
   //CREATE A VERTICAL GRADIENT ON THE CANVAS
   let verticalGradient = colorPickerCtx.createLinearGradient(0, 0, 0, 300);
-
   verticalGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
   verticalGradient.addColorStop(1, 'black');
   colorPickerCtx.fillStyle = verticalGradient;
@@ -371,29 +367,31 @@ colorSliderMarker.addEventListener('mousedown', (e) => {
 
 colorSlider.addEventListener('mousemove', (e) => {
   if (dragging == true) {
-    colorSliderMarker.style.top = e.offsetY + 'px';
 
-    let sliderX = e.offsetX;
-    let sliderY = e.offsetY;
+    //SET POSITION OF COLOR SLIDER MARKER
+    colorSliderMarker.style.top = e.offsetY + 'px'; //use variable for e.offsetY
+
+    let sliderX = e.offsetX; //PLACE e.offsetX in variable
+    let sliderY = e.offsetY; //place e.offsetY '' '''''''
   
     //GET RGB VALUES OF CLICKED PIXEL
     let sliderImgData = colorSliderCtx.getImageData(sliderX, sliderY, 1, 1);
     sliderR = sliderImgData.data[0];
     sliderG = sliderImgData.data[1];
     sliderB = sliderImgData.data[2];
+
+    //SET COLOR OF GRADIENT
     let color = `rgb(${sliderR}, ${sliderG}, ${sliderB})`;
   
-    //CREATE A HORIZONTAL GRADIENT ON THE CANVAS
+    //CREATE A HORIZONTAL GRADIENT ON THE CANVAS USING SLIDER MARKER
     let horizontalGradient = colorPickerCtx.createLinearGradient(0, 0, 300, 0);
-    
     horizontalGradient.addColorStop(0, 'white');
     horizontalGradient.addColorStop(1, color);
     colorPickerCtx.fillStyle = horizontalGradient;
     colorPickerCtx.fillRect(0, 0, 300, 300);
   
-    //CREATE A VERTICAL GRADIENT ON THE CANVAS
+    //CREATE A VERTICAL GRADIENT ON THE CANVAS USING SLIDER MARKER
     let verticalGradient = colorPickerCtx.createLinearGradient(0, 0, 0, 300);
-  
     verticalGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
     verticalGradient.addColorStop(1, 'black');
     colorPickerCtx.fillStyle = verticalGradient;
