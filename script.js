@@ -44,14 +44,16 @@ let activeIcon = null;
 
 icons.forEach(icon => {
   icon.addEventListener('click', (event)=>{
-    clickedIcon = event.currentTarget;
+    let clickedIcon = event.currentTarget;
+  
     toggleClickedIcon();
+    if (colorPickerTool == clickedIcon) {toggleModal()};
     if (selectedColorPen == clickedIcon) {togglePen()}
     else{deactivatePen()};
     deactivateNonClickedIcons();
     setActiveIcon();
     console.log(activeIcon);
-    if(modalIsActive() && activeIcon != colorPickerTool) {hideModal()};
+    if(modalIsActive() && colorPickerTool != activeIcon) {hideModal()};
 
     function setActiveIcon() {
       if (clickedIcon.classList.contains('iconIsActive')) {return activeIcon = clickedIcon}
@@ -82,8 +84,6 @@ backgroundWrapper.addEventListener('click', (event)=>{
     console.log(activeIcon);
   };
 });
-
-colorPickerTool.addEventListener('click', toggleModal);
 
 function modalIsActive() {
   return modalWrapper.classList.contains('active');
@@ -272,7 +272,7 @@ colorPickerCanvas.addEventListener('click', (event) => {
     clickedPixelR = imgData.data[0];
     clickedPixelG = imgData.data[1];
     clickedPixelB = imgData.data[2];
-    return pixelRGB = `rgb(${clickedPixelR}, ${clickedPixelG}, ${clickedPixelB})`;
+    return clickedPixelRGB = `rgb(${clickedPixelR}, ${clickedPixelG}, ${clickedPixelB})`;
   }
 
   function setMarkerOnClickedPixel() {
