@@ -244,6 +244,7 @@ colorPickerWrapper.appendChild(colorPickerMarker);
 let colorPickerCtx = colorPickerCanvas.getContext('2d');
 var dragging = false;
 var selectedColor = '';
+var transparentColor = 'rgba(0, 0, 0, 0)';
 
 //CREATE A HORIZONTAL GRADIENT ON THE CANVAS
 let horizontalGradient = colorPickerCtx.createLinearGradient(0, 0, 300, 0);
@@ -254,31 +255,15 @@ colorPickerCtx.fillRect(0, 0, 300, 300);
 
 //CREATE A VERTICAL GRADIENT ON THE CANVAS
 let verticalGradient = colorPickerCtx.createLinearGradient(0, 0, 0, 300);
-verticalGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+verticalGradient.addColorStop(0, transparentColor);
 verticalGradient.addColorStop(1, 'black');
 colorPickerCtx.fillStyle = verticalGradient;
-colorPickerCtx.fillRect(0, 0, 300, 300);
+colorPickerCtx.fillRect(0, 0, 300, 300);  
 
 colorPickerCanvas.addEventListener('click', (event) => {
   event.preventDefault()
-
-  let clickedPixelXCoordinates = event.offsetX;
-  let clickedPixelYCoordinates = event.offsetY;
-  setMarkerOnClickedPixel();
-  selectedColorWindow.style.backgroundColor = getClickedPixelRGBValues();
-
-  function getClickedPixelRGBValues() {
-    let imgData = colorPickerCtx.getImageData(clickedPixelXCoordinates, clickedPixelYCoordinates, 1, 1);
-    clickedPixelR = imgData.data[0];
-    clickedPixelG = imgData.data[1];
-    clickedPixelB = imgData.data[2];
-    return clickedPixelRGB = `rgb(${clickedPixelR}, ${clickedPixelG}, ${clickedPixelB})`;
-  }
-
-  function setMarkerOnClickedPixel() {
-    colorPickerMarker.style.top =  clickedPixelYCoordinates - 8 + 'px';
-    colorPickerMarker.style.left = clickedPixelXCoordinates - 8 + 'px';  
-  }
+  setMarkerOnEventLocation(colorPickerMarker);
+  selectedColorWindow.style.backgroundColor = getRGBValuesOfEventLocation();
 });
 
 document.addEventListener('mouseup', () => {
@@ -294,22 +279,23 @@ colorPickerMarker.addEventListener('mousedown', (event) => {
 colorPickerCanvas.addEventListener('mousemove', (event) => {
     event.preventDefault();
     if (dragging) {
-      colorPickerMarker.style.top = event.offsetY - 8 + 'px';
-      colorPickerMarker.style.left = event.offsetX - 8 + 'px';
-
-      //GET COORDINATES OF colorPickerMarker WHILE BEING DRAGGED
-      let xCoordinates = event.offsetX;
-      let yCoordinates = event.offsetY;
-
-      //CHANGE THE BACKGROUND COLOR WHILE colorPickerMarker IS DRAGGED
-      let imgData = colorPickerCtx.getImageData(xCoordinates, yCoordinates, 1, 1);
-      pixelR = imgData.data[0];
-      pixelG = imgData.data[1];
-      pixelB = imgData.data[2];
-      selectedColor = `rgb(${pixelR}, ${pixelG}, ${pixelB})`
-      selectedColorWindow.style.backgroundColor = selectedColor;
+      setMarkerOnEventLocation(colorPickerMarker);
+      selectedColorWindow.style.backgroundColor = getRGBValuesOfEventLocation();
     };
 });
+
+function getRGBValuesOfEventLocation() {
+  let imgData = colorPickerCtx.getImageData(event.offsetX, event.offsetY, 1, 1);
+  eventLocationR = imgData.data[0];
+  eventLocationG = imgData.data[1];
+  eventLocationB = imgData.data[2];
+  return eventLocationRGB = `rgb(${eventLocationR}, ${eventLocationG}, ${eventLocationB})`;
+}
+
+function  setMarkerOnEventLocation(marker) {
+  marker.style.top =  event.offsetY - 8 + 'px';
+  marker.style.left = event.offsetX - 8 + 'px';  
+}
 
 //ADD 2D CONTEXT TO COLOR SLIDER
 let colorSliderCtx = colorSlider.getContext('2d');
@@ -360,19 +346,19 @@ colorSlider.addEventListener('click', (event) => {
   colorSliderMarker.style.top = event.offsetY - 4 + 'px';
 });
 
-colorSliderMarker.addEventListener('mousedown', (e) => {
-  e.preventDefault();
+colorSliderMarker.addEventListener('mousedown', (event) => {
+  event.preventDefault();
   dragging = true;
 });
 
-colorSlider.addEventListener('mousemove', (e) => {
+colorSlider.addEventListener('mousemove', (event) => {
   if (dragging == true) {
 
     //SET POSITION OF COLOR SLIDER MARKER
-    colorSliderMarker.style.top = e.offsetY + 'px'; //use variable for e.offsetY
+    colorSliderMarker.style.top = event.offsetY + 'px'; //marker only moves up and down
 
-    let sliderX = e.offsetX; //PLACE e.offsetX in variable
-    let sliderY = e.offsetY; //place e.offsetY '' '''''''
+    let sliderX = event.offsetX; //PLACE e.offsetX in variable
+    let sliderY = event.offsetY; //place e.offsetY '' '''''''
   
     //GET RGB VALUES OF CLICKED PIXEL
     let sliderImgData = colorSliderCtx.getImageData(sliderX, sliderY, 1, 1);
