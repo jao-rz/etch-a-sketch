@@ -8,9 +8,6 @@ const rainbowTool = document.querySelector('.rainbowTool');
 const eraserTool = document.querySelector('.eraserTool');
 const deleteTool = document.querySelector('.deleteTool');
 
-const modalWrapper = document.querySelector('.modalWrapper');
-const modal = document.querySelector('.modal');
-
 const backgroundWrapper = document.createElement('div');
 backgroundWrapper.classList.add('backgroundWrapper');
 container.appendChild(backgroundWrapper);
@@ -29,42 +26,61 @@ selectedColorDivs.appendChild(selectedColorWindow);
 
 const selectedColorPen = document.createElement('div');
 selectedColorPen.classList.add('selectedColorPen');
-selectedColorPen.classList.add('icon');
+selectedColorPen.classList.add('tool');
 selectedColorDivs.appendChild(selectedColorPen);
 
-const penIcon = document.createElement('img');
-penIcon.classList.add('penIcon');
-penIcon.setAttribute("src", "images/signature.png");
-selectedColorPen.appendChild(penIcon);
+const penTool = document.createElement('img');
+penTool.classList.add('penTool');
+penTool.setAttribute("src", "images/signature.png");
+selectedColorPen.appendChild(penTool);
 
-const icons = document.querySelectorAll('.icon');
+const tools = document.querySelectorAll('.tool');
 
-let clickedIcon = null;
-let activeIcon = null;
+const modalWrapper = document.querySelector('.modalWrapper');
+const modal = document.querySelector('.modal');
+const colorPickerCanvas = document.querySelector('.colorPickerCanvas');
+const colorPickerWrapper = document.querySelector('.colorPickerWrapper');
+const colorSlider = document.querySelector('.colorSlider');
+const colorSliderWrapper = document.querySelector('.colorSliderWrapper');
+const colorSliderMarker = document.createElement('div');
+colorSliderMarker.classList.add('colorSliderMarker');
+colorSliderWrapper.appendChild(colorSliderMarker);
+const colorPickerMarker = document.createElement('div');
+colorPickerMarker.classList.add('colorPickerMarker');
+colorPickerWrapper.appendChild(colorPickerMarker);
+const colorPickerCtx = colorPickerCanvas.getContext('2d');
+const colorSliderCtx = colorSlider.getContext('2d');
 
-icons.forEach(icon => {
-  icon.addEventListener('click', (event)=>{
-    let clickedIcon = event.currentTarget;
+//INITIATE PROGRAM DEFAULT
+createGrid(75);
+var squares = document.querySelectorAll('.square-css');
+let activeButton = null;
+let clickedTool = null;
+let activeTool = null;
+var isDrawing = false;
+
+tools.forEach(tool => {
+  tool.addEventListener('click', (event)=>{
+    let clickedTool = event.currentTarget;
   
-    toggleClickedIcon();
-    if (colorPickerTool == clickedIcon) {toggleModal()};
-    if (selectedColorPen == clickedIcon) {togglePen()}
+    toggleClickedTool();
+    if (colorPickerTool == clickedTool) {toggleModal()};
+    if (selectedColorPen == clickedTool) {togglePen()}
     else{deactivatePen()};
-    deactivateNonClickedIcons();
-    setActiveIcon();
-    console.log(activeIcon);
-    if(modalIsActive() && colorPickerTool != activeIcon) {hideModal()};
+    deactivateNonClickedTools();
+    setActiveTool();
+    if(modalIsActive() && colorPickerTool != activeTool) {hideModal()};
 
-    function setActiveIcon() {
-      if (clickedIcon.classList.contains('iconIsActive')) {return activeIcon = clickedIcon}
-      else {return activeIcon = null};
+    function setActiveTool() {
+      if (clickedTool.classList.contains('toolIsActive')) {return activeTool = clickedTool}
+      else {return activeTool = null};
     };
-    function toggleClickedIcon() {
-      return icon.classList.toggle('iconIsActive')
+    function toggleClickedTool() {
+      return tool.classList.toggle('toolIsActive')
     };
-    function deactivateNonClickedIcons() {
-      if (activeIcon != null && activeIcon != event.currentTarget) {
-        return activeIcon.classList.remove('iconIsActive');
+    function deactivateNonClickedTools() {
+      if (activeTool != null && activeTool != event.currentTarget) {
+        return activeTool.classList.remove('toolIsActive');
       };
     };
     function deactivatePen() {
@@ -80,8 +96,7 @@ backgroundWrapper.addEventListener('click', (event)=>{
   if(eventOutisdeModal(event) && modalIsActive()) {
     hideModal();
     deactivatecolorPickerTool();
-    activeIcon = null;
-    console.log(activeIcon);
+    activeTool = null;
   };
 });
 
@@ -107,7 +122,7 @@ function showModal() {
 };
 
 function deactivatecolorPickerTool() {
-  colorPickerTool.classList.remove('iconIsActive');
+  colorPickerTool.classList.remove('toolIsActive');
 };
 
 function createSquare() {
@@ -144,17 +159,9 @@ function createGrid(n) {
 
         for (j=0; j < n; j++) {
             createSquare();
-        }
-    }
-}
-
-//INITIATE PROGRAM DEFAULT
-
-createGrid(75);
-let activeButton = null;
-
-var squares = document.querySelectorAll('.square-css');
-var isDrawing = false;
+        };
+    };
+};
 
 document.addEventListener('mousedown', (e) => {
     e.preventDefault();
@@ -169,13 +176,13 @@ document.addEventListener('mouseup', (e) => {
 });
 
 deleteTool.addEventListener('click', () => {
-    if (deleteTool.classList.contains('iconIsActive')) {
+    if (deleteTool.classList.contains('toolIsActive')) {
         squares.forEach(square => square.style.backgroundColor = '');
     }
 });
 
 squares.forEach(square => square.addEventListener('click', (e)=> {
-    if (eyedropperTool.classList.contains('iconIsActive')) {
+    if (eyedropperTool.classList.contains('toolIsActive')) {
         selectedColor = square.style.backgroundColor;
         selectedColorWindow.style.backgroundColor = selectedColor;
     };
@@ -183,13 +190,13 @@ squares.forEach(square => square.addEventListener('click', (e)=> {
 
 squares.forEach(square => square.addEventListener('mouseenter', e => {
     e.preventDefault();
-    if (selectedColorPen.classList.contains('iconIsActive') && isDrawing) {
+    if (selectedColorPen.classList.contains('toolIsActive') && isDrawing) {
         square.style.backgroundColor = selectedColorWindow.style.backgroundColor;
     }
-    if (eraserTool.classList.contains('iconIsActive') && isDrawing) {
+    if (eraserTool.classList.contains('toolIsActive') && isDrawing) {
         square.style.backgroundColor = '';
     }
-    if (grayscaleTool.classList.contains('iconIsActive') && isDrawing) {
+    if (grayscaleTool.classList.contains('toolIsActive') && isDrawing) {
         if (square.style.backgroundColor == 'rgb(0, 0, 0)') {
             square.style.backgroundColor = 'rgb(0, 0, 0)'
         }
@@ -222,65 +229,26 @@ squares.forEach(square => square.addEventListener('mouseenter', e => {
         }
         else{square.style.backgroundColor = 'rgba(0, 0, 0, 0.1)'}
     }
-    if (rainbowTool.classList.contains('iconIsActive') && isDrawing === true) {
+    if (rainbowTool.classList.contains('toolIsActive') && isDrawing === true) {
         square.style.backgroundColor = randomHexColor();
     }
 }));
 
 //COLOR PICKER AND SLIDER SCRIPT
-const colorPickerCanvas = document.querySelector('.colorPickerCanvas');
-const colorPickerWrapper = document.querySelector('.colorPickerWrapper');
-const colorSlider = document.querySelector('.colorSlider');
-const colorSliderWrapper = document.querySelector('.colorSliderWrapper');
-
-const colorSliderMarker = document.createElement('div');
-colorSliderMarker.classList.add('colorSliderMarker');
-colorSliderWrapper.appendChild(colorSliderMarker);
-
-const colorPickerMarker = document.createElement('div');
-colorPickerMarker.classList.add('colorPickerMarker');
-colorPickerWrapper.appendChild(colorPickerMarker);
-
-let colorPickerCtx = colorPickerCanvas.getContext('2d');
 var dragging = false;
 var selectedColor = '';
 var transparentColor = 'rgba(0, 0, 0, 0)';
-var color = 'red';
+var colorForColorPickerGradient = 'red';
 
-//CREATE A HORIZONTAL GRADIENT ON THE CANVAS
-let horizontalGradient = colorPickerCtx.createLinearGradient(0, 0, 300, 0);
-horizontalGradient.addColorStop(0, 'white');
-horizontalGradient.addColorStop(1, color);
-colorPickerCtx.fillStyle = horizontalGradient;
-colorPickerCtx.fillRect(0, 0, 300, 300);
+createNewColorPickerGradient();
+createColorSlider();
 
-//CREATE A VERTICAL GRADIENT ON THE CANVAS
-let verticalGradient = colorPickerCtx.createLinearGradient(0, 0, 0, 300);
-verticalGradient.addColorStop(0, transparentColor);
-verticalGradient.addColorStop(1, 'black');
-colorPickerCtx.fillStyle = verticalGradient;
-colorPickerCtx.fillRect(0, 0, 300, 300);  
 
-//ADD 2D CONTEXT TO COLOR SLIDER
-let colorSliderCtx = colorSlider.getContext('2d');
-
-//CREATE A VERTICAL GRADIENT ON THE COLOR SLIDER
-let sliderGradient = colorSliderCtx.createLinearGradient(0, 0, 0, 300);
-sliderGradient.addColorStop(0, 'red');
-sliderGradient.addColorStop(0.1, 'orange');
-sliderGradient.addColorStop(0.2, 'yellow');
-sliderGradient.addColorStop(0.4, 'lime');
-sliderGradient.addColorStop(0.5, 'skyblue');
-sliderGradient.addColorStop(0.7, 'blue');
-sliderGradient.addColorStop(0.9, 'magenta');
-sliderGradient.addColorStop(1, 'red');
-colorSliderCtx.fillStyle = sliderGradient;
-colorSliderCtx.fillRect(0, 0, 40, 300);
 
 colorPickerCanvas.addEventListener('click', (event) => {
   event.preventDefault()
-  setMarkerOnEventLocation(colorPickerMarker);
-  selectedColorWindow.style.backgroundColor = getRGBValuesOfEventLocationOnColorPicker();
+  setColorPickerMarkerOnEventLocation();
+  selectedColorWindow.style.backgroundColor = getRGBOfEventLocationOnContext(colorPickerCtx);
 });
 
 colorPickerMarker.addEventListener('mousedown', (event) => {
@@ -292,33 +260,22 @@ document.addEventListener('mouseup', () => {
   dragging = false;
 });
 
-
 colorPickerCanvas.addEventListener('mousemove', (event) => {
     event.preventDefault();
     if (dragging) {
-      setMarkerOnEventLocation(colorPickerMarker);
-      selectedColorWindow.style.backgroundColor = getRGBValuesOfEventLocationOnColorPicker();
+      setColorPickerMarkerOnEventLocation();
+      selectedColorWindow.style.backgroundColor = getRGBOfEventLocationOnContext(colorPickerCtx);
     };
 });
 
-function getRGBValuesOfEventLocationOnColorPicker() {
-  let imgData = colorPickerCtx.getImageData(event.offsetX, event.offsetY, 1, 1);
-  eventLocationR = imgData.data[0];
-  eventLocationG = imgData.data[1];
-  eventLocationB = imgData.data[2];
-  return eventLocationRGB = `rgb(${eventLocationR}, ${eventLocationG}, ${eventLocationB})`;
-};
-
-function setMarkerOnEventLocation(marker) {
-  marker.style.top =  event.offsetY - 8 + 'px';
-  marker.style.left = event.offsetX - 8 + 'px';  
+function setColorPickerMarkerOnEventLocation() {
+  colorPickerMarker.style.top =  event.offsetY - 8 + 'px';
+  colorPickerMarker.style.left = event.offsetX - 8 + 'px';  
 };
 
 colorSlider.addEventListener('click', (event) => {
-
-  //SET POSITION OF COLOR SLIDER MARKER
-  colorSliderMarker.style.top = event.offsetY + 'px'; //marker only moves up and down
-  color = getRGBValuesOfEventLocationOnColorSlider();
+  setColorSliderMarkerOnEventLocation();
+  colorForColorPickerGradient = getRGBOfEventLocationOnContext(colorSliderCtx);
   createNewColorPickerGradient();
 });
 
@@ -329,33 +286,50 @@ colorSliderMarker.addEventListener('mousedown', (event) => {
 
 colorSlider.addEventListener('mousemove', (event) => {
   if (dragging == true) {
-    //SET POSITION OF COLOR SLIDER MARKER
-    colorSliderMarker.style.top = event.offsetY + 'px'; //marker only moves up and down
-    color = getRGBValuesOfEventLocationOnColorSlider();
+    setColorSliderMarkerOnEventLocation();
+    colorForColorPickerGradient = getRGBOfEventLocationOnContext(colorSliderCtx);
     createNewColorPickerGradient();
   };
 });
 
-function getRGBValuesOfEventLocationOnColorSlider() {
-  let sliderImgData = colorSliderCtx.getImageData(event.offsetX, event.offsetY, 1, 1);
-  eventLocationR = sliderImgData.data[0];
-  eventLocationG = sliderImgData.data[1];
-  eventLocationB = sliderImgData.data[2];
+function getRGBOfEventLocationOnContext(contextName) {
+  let imgData = contextName.getImageData(event.offsetX, event.offsetY, 1, 1);
+  eventLocationR = imgData.data[0];
+  eventLocationG = imgData.data[1];
+  eventLocationB = imgData.data[2];
   return `rgb(${eventLocationR}, ${eventLocationG}, ${eventLocationB})`;
 };
 
 function createNewColorPickerGradient() {
-  //CREATE A HORIZONTAL GRADIENT ON THE CANVAS USING SLIDER MARKER
+  //CREATE A HORIZONTAL GRADIENT ON COLOR PICKER
   let horizontalGradient = colorPickerCtx.createLinearGradient(0, 0, 300, 0);
   horizontalGradient.addColorStop(0, 'white');
-  horizontalGradient.addColorStop(1, color);
+  horizontalGradient.addColorStop(1, colorForColorPickerGradient);
   colorPickerCtx.fillStyle = horizontalGradient;
   colorPickerCtx.fillRect(0, 0, 300, 300);
 
-  //CREATE A VERTICAL GRADIENT ON THE CANVAS USING SLIDER MARKER
+  //CREATE A VERTICAL GRADIENT ON COLOR PICKER
   let verticalGradient = colorPickerCtx.createLinearGradient(0, 0, 0, 300);
   verticalGradient.addColorStop(0, transparentColor);
   verticalGradient.addColorStop(1, 'black');
   colorPickerCtx.fillStyle = verticalGradient;
   colorPickerCtx.fillRect(0, 0, 300, 300);
+};
+
+function setColorSliderMarkerOnEventLocation() {
+  colorSliderMarker.style.top = event.offsetY - 5 + 'px'; 
+};
+
+function createColorSlider() {
+  let sliderGradient = colorSliderCtx.createLinearGradient(0, 0, 0, 300);
+  sliderGradient.addColorStop(0, 'red');
+  sliderGradient.addColorStop(0.1, 'orange');
+  sliderGradient.addColorStop(0.2, 'yellow');
+  sliderGradient.addColorStop(0.4, 'lime');
+  sliderGradient.addColorStop(0.5, 'skyblue');
+  sliderGradient.addColorStop(0.7, 'blue');
+  sliderGradient.addColorStop(0.9, 'magenta');
+  sliderGradient.addColorStop(1, 'red');
+  colorSliderCtx.fillStyle = sliderGradient;
+  colorSliderCtx.fillRect(0, 0, 40, 300);
 };

@@ -48,7 +48,7 @@ li:hover {
     background-color: rgba(255, 255, 255, 0.5);
 }
 
-.iconIsActive {
+.toolIsActive {
     background-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -136,7 +136,7 @@ li img {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.penIcon {
+.penTool {
     max-height: 40px;
 }
 
