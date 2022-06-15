@@ -48,8 +48,6 @@ colorSliderWrapper.appendChild(colorSliderMarker);
 const colorPickerMarker = document.createElement('div');
 colorPickerMarker.classList.add('colorPickerMarker');
 colorPickerWrapper.appendChild(colorPickerMarker);
-const colorPickerCtx = colorPickerCanvas.getContext('2d');
-const colorSliderCtx = colorSlider.getContext('2d');
 
 //INITIATE PROGRAM DEFAULT
 createGrid(75);
@@ -86,7 +84,6 @@ tools.forEach(tool => {
     function deactivatePen() {
       selectedColorDivs.classList.remove('on')
     };
-
   });
 });
 
@@ -239,11 +236,11 @@ var dragging = false;
 var selectedColor = '';
 var transparentColor = 'rgba(0, 0, 0, 0)';
 var colorForColorPickerGradient = 'red';
+const colorPickerCtx = colorPickerCanvas.getContext('2d');
+const colorSliderCtx = colorSlider.getContext('2d');
 
 createNewColorPickerGradient();
 createColorSlider();
-
-
 
 colorPickerCanvas.addEventListener('click', (event) => {
   event.preventDefault()
