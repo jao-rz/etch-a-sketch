@@ -50,7 +50,36 @@ colorPickerMarker.classList.add('colorPickerMarker');
 colorPickerWrapper.appendChild(colorPickerMarker);
 
 //INITIATE PROGRAM DEFAULT
-createGrid(75);
+askGridSize()
+createGrid(gridSize)
+
+function askGridSize() {
+  gridSize = prompt("Enter a number between 20 and 100 for canvas pixel size: ")
+  if (gridSize < 20 || gridSize > 100) {
+    alert("Entered size is not between 20 and 100.")
+    return askGridSize()
+  }
+  else {return gridSize}
+}
+
+function createSquare() {
+  let square = document.createElement("div");
+  square.classList.add("square-css");
+  row.appendChild(square);
+}
+
+function createGrid(gridSize) {
+    for (i=0; i < gridSize; i++) {
+        row = document.createElement("div");
+        row.classList.add("row")
+        grid.appendChild(row)
+
+        for (j=0; j < gridSize; j++) {
+            createSquare();
+        };
+    };
+};
+
 var squares = document.querySelectorAll('.square-css');
 let activeButton = null;
 let clickedTool = null;
@@ -122,12 +151,6 @@ function deactivatecolorPickerTool() {
   colorPickerTool.classList.remove('toolIsActive');
 };
 
-function createSquare() {
-    let square = document.createElement("div");
-    square.classList.add("square-css");
-    row.appendChild(square);
-}
-
 function randomNumberBetweenZeroAnd(num) {
    return Math.floor(Math.random()*(num + 1));
 }
@@ -147,18 +170,6 @@ function randomHexColor() {
     
     return '#' + hexr + hexg + hexb;
 }
-
-function createGrid(n) {
-    for (i=0; i < n; i++) {
-        row = document.createElement("div");
-        row.classList.add("row")
-        grid.appendChild(row)
-
-        for (j=0; j < n; j++) {
-            createSquare();
-        };
-    };
-};
 
 document.addEventListener('mousedown', (e) => {
     e.preventDefault();
