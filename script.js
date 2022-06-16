@@ -1,12 +1,86 @@
 //GRID NODES
 const container = document.querySelector('.container');
 
-const colorPickerTool = document.querySelector('.colorPickerTool');
-const eyedropperTool = document.querySelector('.eyedropperTool');
-const grayscaleTool = document.querySelector('.grayscaleTool');
-const rainbowTool = document.querySelector('.rainbowTool');
-const eraserTool = document.querySelector('.eraserTool');
-const deleteTool = document.querySelector('.deleteTool');
+const toolbar = document.createElement('div');
+toolbar.classList.add('toolbar')
+container.appendChild(toolbar);
+
+const toolList = document.createElement('ul');
+toolList.classList.add('toolList');
+toolbar.appendChild(toolList);
+
+const colorPickerTool = document.createElement('li');
+colorPickerTool.classList.add('.colorPickerTool');
+colorPickerTool.setAttribute('title', 'Color Picker');
+toolList.appendChild(colorPickerTool);
+
+const eyedropperTool = document.createElement('li');
+eyedropperTool.classList.add('.eyedropperTool');
+toolList.appendChild(eyedropperTool);
+
+const grayscaleTool = document.createElement('li');
+grayscaleTool.classList.add('.grayscaleTool');
+toolList.appendChild(grayscaleTool);
+
+const rainbowTool = document.createElement('li');
+rainbowTool.classList.add('.rainbowTool');
+toolList.appendChild(rainbowTool);
+
+const eraserTool = document.createElement('li');
+eraserTool.classList.add('.eraserTool');
+toolList.appendChild(eraserTool);
+
+const deleteTool = document.createElement('li');
+deleteTool.classList.add('.deleteTool');
+toolList.appendChild(deleteTool);
+
+const toolbarIcons = document.querySelectorAll('li');
+for (const toolbarIcon of toolbarIcons) {toolbarIcon.classList.add('tool')};
+
+const colorPickerImageWrapper = document.createElement('div');
+colorPickerTool.appendChild(colorPickerImageWrapper);
+
+const eyedropperImageWrapper = document.createElement('div');
+eyedropperTool.appendChild(eyedropperImageWrapper);
+
+const grayscaleImageWrapper = document.createElement('div');
+grayscaleTool.appendChild(grayscaleImageWrapper);
+
+const rainbowImageWrapper = document.createElement('div');
+rainbowTool.appendChild(rainbowImageWrapper);
+
+const eraserImageWrapper = document.createElement('div');
+eraserTool.appendChild(eraserImageWrapper);
+
+const deleteImageWrapper = document.createElement('div');
+deleteTool.appendChild(deleteImageWrapper);
+
+const imageWrappers = document.querySelectorAll('li > div');
+for (const imageWrapper of imageWrappers) {imageWrapper.classList.add('imageWrapper');}
+
+const colorPickerImage = document.createElement('img');
+colorPickerImage.setAttribute('src', 'images/color-selection.png')
+colorPickerImageWrapper.appendChild(colorPickerImage);
+
+const eyedropperImage = document.createElement('img');
+eyedropperImage.setAttribute('src', 'images/eyedropper.png');
+eyedropperImageWrapper.appendChild(eyedropperImage);
+
+const grayscaleImage = document.createElement('img');
+grayscaleImage.setAttribute('src', 'images/gradient.png')
+grayscaleImageWrapper.appendChild(grayscaleImage);
+
+const rainbowImage = document.createElement('img');
+rainbowImage.setAttribute('src', 'images/rainbow-flag.png');
+rainbowImageWrapper.appendChild(rainbowImage);
+
+const eraserImage = document.createElement('img');
+eraserImage.setAttribute('src', 'images/eraser.png')
+eraserImageWrapper.appendChild(eraserImage);
+
+const deleteImage = document.createElement('img');
+deleteImage.setAttribute('src', 'images/delete.png');
+deleteImageWrapper.appendChild(deleteImage);
 
 const backgroundWrapper = document.createElement('div');
 backgroundWrapper.classList.add('backgroundWrapper');
@@ -36,12 +110,34 @@ selectedColorPen.appendChild(penTool);
 
 const tools = document.querySelectorAll('.tool');
 
-const modalWrapper = document.querySelector('.modalWrapper');
-const modal = document.querySelector('.modal');
-const colorPickerCanvas = document.querySelector('.colorPickerCanvas');
-const colorPickerWrapper = document.querySelector('.colorPickerWrapper');
-const colorSlider = document.querySelector('.colorSlider');
-const colorSliderWrapper = document.querySelector('.colorSliderWrapper');
+const modalWrapper = document.createElement('div')
+modalWrapper.classList.add('modalWrapper');
+container.appendChild(modalWrapper);
+
+const modal = document.createElement('div');
+modal.classList.add('modal');
+modalWrapper.appendChild(modal);
+
+const colorPickerWrapper = document.createElement('div');
+colorPickerWrapper.classList.add('colorPickerWrapper');
+modal.appendChild(colorPickerWrapper);
+
+const colorPickerCanvas = document.createElement('canvas');
+colorPickerCanvas.setAttribute('width', '300px');
+colorPickerCanvas.setAttribute('height', '300px');
+colorPickerCanvas.classList.add('colorPickerCanvas');
+colorPickerWrapper.appendChild(colorPickerCanvas);
+
+const colorSliderWrapper = document.createElement('div');
+colorSliderWrapper.classList.add('colorSliderWrapper');
+modal.appendChild(colorSliderWrapper);
+
+const colorSlider = document.createElement('canvas');
+colorSlider.setAttribute('width', '40px');
+colorSlider.setAttribute('height', '300px');
+colorSlider.classList.add('colorSlider');
+colorSliderWrapper.appendChild(colorSlider);
+
 const colorSliderMarker = document.createElement('div');
 colorSliderMarker.classList.add('colorSliderMarker');
 colorSliderWrapper.appendChild(colorSliderMarker);
