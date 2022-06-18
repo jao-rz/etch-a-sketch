@@ -16,22 +16,27 @@ toolList.appendChild(colorPickerTool);
 
 const eyedropperTool = document.createElement('li');
 eyedropperTool.classList.add('.eyedropperTool');
+eyedropperTool.setAttribute('title', 'Eyedropper')
 toolList.appendChild(eyedropperTool);
 
 const grayscaleTool = document.createElement('li');
 grayscaleTool.classList.add('.grayscaleTool');
+grayscaleTool.setAttribute('title', 'Grayscale Pen');
 toolList.appendChild(grayscaleTool);
 
 const rainbowTool = document.createElement('li');
 rainbowTool.classList.add('.rainbowTool');
+rainbowTool.setAttribute('title', 'Rainbow Pen');
 toolList.appendChild(rainbowTool);
 
 const eraserTool = document.createElement('li');
 eraserTool.classList.add('.eraserTool');
+eraserTool.setAttribute('title', 'Eraser');
 toolList.appendChild(eraserTool);
 
 const deleteTool = document.createElement('li');
 deleteTool.classList.add('.deleteTool');
+deleteTool.setAttribute('title', 'Delete');
 toolList.appendChild(deleteTool);
 
 const toolbarIcons = document.querySelectorAll('li');
@@ -59,27 +64,27 @@ const imageWrappers = document.querySelectorAll('li > div');
 for (const imageWrapper of imageWrappers) {imageWrapper.classList.add('imageWrapper');}
 
 const colorPickerImage = document.createElement('img');
-colorPickerImage.setAttribute('src', 'images/color-selection.png')
+colorPickerImage.setAttribute('src', 'images/color-selection.png') //<a href="https://www.flaticon.com/free-icons/color" title="color icons">Color icons created by Freepik - Flaticon</a>
 colorPickerImageWrapper.appendChild(colorPickerImage);
 
 const eyedropperImage = document.createElement('img');
-eyedropperImage.setAttribute('src', 'images/eyedropper.png');
+eyedropperImage.setAttribute('src', 'images/eyedropper.png'); //<a href="https://www.flaticon.com/free-icons/eyedropper" title="eyedropper icons">Eyedropper icons created by Good Ware - Flaticon</a>
 eyedropperImageWrapper.appendChild(eyedropperImage);
 
 const grayscaleImage = document.createElement('img');
-grayscaleImage.setAttribute('src', 'images/gradient.png')
+grayscaleImage.setAttribute('src', 'images/gradient.png'); //<a href="https://www.flaticon.com/free-icons/gradient" title="gradient icons">Gradient icons created by Freepik - Flaticon</a>
 grayscaleImageWrapper.appendChild(grayscaleImage);
 
 const rainbowImage = document.createElement('img');
-rainbowImage.setAttribute('src', 'images/rainbow-flag.png');
+rainbowImage.setAttribute('src', 'images/rainbow-flag.png'); //<a href="https://www.flaticon.com/free-icons/pride" title="pride icons">Pride icons created by Freepik - Flaticon</a>
 rainbowImageWrapper.appendChild(rainbowImage);
 
 const eraserImage = document.createElement('img');
-eraserImage.setAttribute('src', 'images/eraser.png')
+eraserImage.setAttribute('src', 'images/eraser.png'); //<a href="https://www.flaticon.com/free-icons/rubber" title="rubber icons">Rubber icons created by Freepik - Flaticon</a>
 eraserImageWrapper.appendChild(eraserImage);
 
 const deleteImage = document.createElement('img');
-deleteImage.setAttribute('src', 'images/delete.png');
+deleteImage.setAttribute('src', 'images/delete.png'); //<a href="https://www.flaticon.com/free-icons/delete" title="delete icons">Delete icons created by Design Circle - Flaticon</a>
 deleteImageWrapper.appendChild(deleteImage);
 
 const backgroundWrapper = document.createElement('div');
@@ -94,6 +99,15 @@ const selectedColorDivs = document.createElement('div');
 selectedColorDivs.classList.add('selectedColorDivs');
 backgroundWrapper.appendChild(selectedColorDivs);
 
+const footer = document.createElement('div');
+footer.classList.add('footer');
+container.appendChild(footer);
+
+const creditsLink = document.createElement('a');
+creditsLink.setAttribute('href', 'credits.html');
+creditsLink.textContent = 'CREDITS';
+footer.appendChild(creditsLink);
+
 const selectedColorWindow = document.createElement('div');
 selectedColorWindow.classList.add('selectedColorWindow');
 selectedColorDivs.appendChild(selectedColorWindow);
@@ -105,7 +119,7 @@ selectedColorDivs.appendChild(selectedColorPen);
 
 const penTool = document.createElement('img');
 penTool.classList.add('penTool');
-penTool.setAttribute("src", "images/signature.png");
+penTool.setAttribute("src", "images/signature.png");//<a href="https://www.flaticon.com/free-icons/pen" title="pen icons">Pen icons created by yut1655 - Flaticon</a>
 selectedColorPen.appendChild(penTool);
 
 const tools = document.querySelectorAll('.tool');
@@ -263,7 +277,6 @@ function randomHexColor() {
     let hexr = r.toString(16).padStart(2, '0');
     let hexg = g.toString(16).padStart(2, '0');
     let hexb = b.toString(16).padStart(2, '0');
-    
     return '#' + hexr + hexg + hexb;
 }
 

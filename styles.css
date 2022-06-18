@@ -10,7 +10,7 @@
 .toolbar {
     display: flex;
     height: 98vh;
-    position: relative;
+    position: absolute;
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.8);
@@ -115,7 +115,6 @@ li img {
     border-color: white;
 }
 
-
 .selectedColorWindow {
     height: 50px;
     width: 100px;
@@ -195,4 +194,26 @@ li img {
     flex-direction: column;
     flex-grow: 0;
     background-color: white;
+}
+
+.footer {
+    display: flex;
+    height: 30px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    margin-top: auto;
+    margin-left: 95px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 8px;
 }
